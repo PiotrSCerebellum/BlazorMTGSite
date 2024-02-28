@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace MTG-app.Models;
+namespace MTG_app.Models;
 
 public partial class MyDBContext : DbContext
 {

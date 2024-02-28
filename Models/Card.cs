@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MTG-app.Models;
+namespace MTG_app.Models;
 
 public partial class Card
 {

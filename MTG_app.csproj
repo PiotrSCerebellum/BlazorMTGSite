@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-MTG-app-48ee4e73-3fd6-44c6-829e-d5cf1723a0d6</UserSecretsId>
-    <RootNamespace>MTG-app</RootNamespace>
+    <UserSecretsId>aspnet-MTG-48ee4e73-3fd6-44c6-829e-d5cf1723a0d6</UserSecretsId>
+    <RootNamespace>MTG_app</RootNamespace>
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
   </PropertyGroup>
 

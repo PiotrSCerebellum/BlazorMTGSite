@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTG-app", "MTG-app.csproj", "{4AE9ECA7-5520-4966-BECB-89F929512D12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTG_app", "MTG_app.csproj", "{4AE9ECA7-5520-4966-BECB-89F929512D12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
