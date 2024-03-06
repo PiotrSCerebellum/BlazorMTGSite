@@ -1,0 +1,90 @@
+﻿
+@using MTG.Services
+@rendermode InteractiveServer
+@using System.Linq
+
+<h3>Choose Cards</h3>
+<div class="inputField">
+<label for="cardNameInput">Card Name</label>
+<input id="cardNameInput" @bind=@cardName type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
+</div>
+
+<div class="inputField">
+    <label for="cardTextInput">Card Text</label>
+    <input id="cardTextInput" @bind=@cardText type="text" placeholder="Any text, e.g.'Draw a card'"/>
+</div>
+<div class="inputField">
+    <label for="cardType">Card Type</label>
+    <input id="cardType" @bind=@cardType type="search" list="typesList" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Enter a type or choose from the list">
+    <datalist id="typesList">
+        @foreach (string type in types)
+        {
+            <option value=@type />
+        }
+        </datalist>
+</div>
+<div class="inputField">
+    <label for="colorSelect">Colors</label>
+    <div id="colorSelect">
+        @foreach (string color in colors)
+        {
+            <input type="checkbox" @ name=@color value=@color />
+            <img alt="colorIcon" />
+        }<br />
+        <select id="colorOptions">
+            <option value="exactly">Exactly these colors</option>
+            <option value="including">Including these colors</option>
+        </select>
+    </div>
+</div>
+<div class="inputField">
+    <label for="cmcInput">Converted Mana Cost</label>
+    <input id="cmcInput" type="number" min="0" max="32000" />
+</div>
+<div class="inputField">
+    <label for="raritySelect">Rarity</label>
+    <div id="raritySelect">
+    @foreach (string rarity in rarities)
+    {
+        <label for=@rarity>@rarity</label>
+        <input type="checkbox" id=@rarity name=@rarity value=@rarity />
+    }
+    </div>
+</div>
+<button type="submit" @onclick="Search">Search</button>
+
+
+@code {
+    public List<string> colors;
+    public List<string> rarities;
+    public List<string> types;
+
+    protected string cardName;
+    protected string cardText;
+    protected string cardType;
+    protected string[] colorCombination;
+    protected int cmc;
+    protected string rarity;
+
+
+    Services services = new Services();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        colors = services.GetColors();
+        rarities = services.GetRarities();
+        types = services.GetTypes();
+        foreach (string color in colors)
+        {
+
+            
+        }
+
+    }
+    private void Search()
+    {
+
+        
+    }
+}

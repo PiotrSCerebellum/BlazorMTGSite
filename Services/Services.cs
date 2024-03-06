@@ -6,11 +6,30 @@ namespace MTG.Services
     public class Services
     {
         MyDBContext dbContext = new MyDBContext();
-        public IQueryable GetRedCards()
+        public List<string> GetColors()
         {
-            IQueryable redCards = dbContext.CardColors.Include(c => c.Color)
-                .Where(w => w.CardId >= 1000 && w.CardId < 1050 && w.Color.Name == "Red")
-                .Select(p => new RedCardModel
+            List<string> colors = dbContext.Colors.Select(p => p.Name).ToList();
+
+            return colors;
+        }
+        public List<string> GetTypes()
+        {
+            List<string> types = dbContext.Types.Select(p => p.Name).ToList();
+
+            return types;
+        }
+        public List<string> GetRarities()
+        {
+            List<string> rarities = dbContext.Rarities.Select(p => p.Name).ToList();
+
+            return rarities;
+        }
+
+        public IQueryable GetCardsByColor(string color,int idRange)
+        {
+            IQueryable cardsByColor = dbContext.CardColors.Include(c => c.Color)
+                .Where(w => w.CardId >= idRange && w.CardId < idRange+50 && w.Color.Name == color)
+                .Select(p => new CardModel
                 {
                     Id = p.CardId,
                     Name = p.Card.Name,
@@ -18,15 +37,29 @@ namespace MTG.Services
                     Color = p.Color.Name
                 })
                 .OrderBy(o => o.Name);
-            return redCards;
+            return cardsByColor;
         }
-        public class RedCardModel
+        public class CardModel
         {
             public long? Id { get; init; }
             public string? Name { get; init; }
             public string? Image { get; init; }
             public string? Color { get; init; }
 
+        }
+
+        public IQueryable GetCardsByType(string type, int idRange)
+        {
+            IQueryable cardsByType = dbContext.CardTypes.Include(c => c.Type)
+                .Where(w => w.CardId >= idRange && w.CardId < idRange + 50 && w.Type.Name == type)
+                .Select(p => new CardModel
+                {
+                    Id = p.CardId,
+                    Name = p.Card.Name,
+                    Image = p.Card.OriginalImageUrl
+                })
+                .OrderBy(o => o.Name);
+            return cardsByType;
         }
 
 
