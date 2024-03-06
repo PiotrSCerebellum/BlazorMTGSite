@@ -3,9 +3,11 @@
 @rendermode InteractiveServer
 @using System.Linq
 
+<CardChooser />
+
 <ul class="image-list">
 
-    @foreach (MTG.Services.Services.RedCardModel redCard in myRedCards)
+    @foreach (MTG.Services.Services.CardModel redCard in myRedCards)
     {
         <li>@redCard.Name <br /><img src=@string.Format("{0}",redCard.Image) /></li>
     }
@@ -21,7 +23,7 @@
   protected override void OnInitialized()
   {
       base.OnInitialized();
-        myRedCards= services.GetRedCards();
+        myRedCards= services.GetCardsByColor("red",50);
   }
 
 }
