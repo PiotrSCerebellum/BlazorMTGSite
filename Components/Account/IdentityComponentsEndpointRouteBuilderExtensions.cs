@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
-using MTG_app.Components.Account.Pages;
-using MTG_app.Components.Account.Pages.Manage;
-using MTG_app.Data;
+using MTG.Components.Account.Pages;
+using MTG.Components.Account.Pages.Manage;
+using MTG.Data;
 using System.Security.Claims;
 using System.Text.Json;
 

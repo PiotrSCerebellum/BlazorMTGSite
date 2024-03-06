@@ -3,7 +3,7 @@ using System;
 
 #nullable disable
 
-namespace MTG_app.Migrations
+namespace MTG.Migrations
 {
     /// <inheritdoc />
     public partial class CreateIdentitySchema : Migration

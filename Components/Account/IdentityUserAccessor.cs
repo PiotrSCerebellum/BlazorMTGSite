@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
-using MTG_app.Data;
+using MTG.Data;
 
-namespace MTG_app.Components.Account
+namespace MTG.Components.Account
 {
     internal sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
     {

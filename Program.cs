@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MTG_app.Components;
-using MTG_app.Components.Account;
-using MTG_app.Data;
+using MTG.Components;
+using MTG.Components.Account;
+using MTG.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

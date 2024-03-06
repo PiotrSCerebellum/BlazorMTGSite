@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MTG_app.Components.Account
+namespace MTG.Components.Account
 {
     internal sealed class IdentityRedirectManager(NavigationManager navigationManager)
     {
