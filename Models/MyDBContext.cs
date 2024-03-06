@@ -38,8 +38,12 @@ public partial class MyDBContext : DbContext
 
     public virtual DbSet<Type> Types { get; set; }
 
+    IConfiguration passwordConfig = new ConfigurationBuilder()
+            .AddUserSecrets<MyDBContext>()
+            .Build();
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("host=localhost;database=postgres;user id=postgres;password=krogulecw");
+        => optionsBuilder.UseNpgsql($"host=localhost;database=postgres;user id=postgres;password={passwordConfig["Password"]}");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
