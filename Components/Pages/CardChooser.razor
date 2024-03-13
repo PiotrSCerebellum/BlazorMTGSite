@@ -18,7 +18,7 @@
     <input id="cardType" @bind=@cardType type="search" list="typesList" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Enter a type or choose from the list">
     <datalist id="typesList">
         @foreach (string type in types)
-        {
+        {   //change for types and subtypes
             <option value=@type />
         }
         </datalist>
@@ -28,8 +28,8 @@
     <div id="colorSelect">
         @foreach (string color in colors)
         {
-            <input type="checkbox" @ name=@color value=@color />
-            <img alt="colorIcon" />
+            <input type="checkbox" name=@color value=@color />
+            <img src="./images/@color" alt="colorIcon" />
         }<br />
         <select id="colorOptions">
             <option value="exactly">Exactly these colors</option>
@@ -51,20 +51,23 @@
     }
     </div>
 </div>
-<button type="submit" @onclick="Search">Search</button>
+<button type="submit" >Search</button>
 
 
 @code {
     public List<string> colors;
     public List<string> rarities;
     public List<string> types;
-
     protected string cardName;
     protected string cardText;
     protected string cardType;
     protected string[] colorCombination;
     protected int cmc;
     protected string rarity;
+    public void Search()
+    {
+        bool a = true;    
+    }
 
 
     Services services = new Services();
@@ -75,16 +78,7 @@
         colors = services.GetColors();
         rarities = services.GetRarities();
         types = services.GetTypes();
-        foreach (string color in colors)
-        {
 
-            
-        }
 
-    }
-    private void Search()
-    {
-
-        
     }
 }
