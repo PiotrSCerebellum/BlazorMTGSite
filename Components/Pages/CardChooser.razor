@@ -6,16 +6,16 @@
 <h3>Choose Cards</h3>
 <div class="inputField">
 <label for="cardNameInput">Card Name</label>
-<input id="cardNameInput" @bind=@cardName type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
+<input id="cardNameInput" @bind=search.cardText type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
 </div>
 
 <div class="inputField">
     <label for="cardTextInput">Card Text</label>
-    <input id="cardTextInput" @bind=@cardText type="text" placeholder="Any text, e.g.'Draw a card'"/>
+    <input id="cardTextInput" @bind=search.cardText type="text" placeholder="Any text, e.g.'Draw a card'"/>
 </div>
 <div class="inputField">
     <label for="cardType">Card Type</label>
-    <input id="cardType" @bind=@cardType type="search" list="typesList" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Enter a type or choose from the list">
+    <input id="cardType" type="search" list="typesList" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Enter a type or choose from the list">
     <datalist id="typesList">
         @foreach (string type in types)
         {   //change for types and subtypes
@@ -58,6 +58,7 @@
     public List<string> colors;
     public List<string> rarities;
     public List<string> types;
+
     protected string cardName;
     protected string cardText;
     protected string cardType;
@@ -69,7 +70,7 @@
         bool a = true;    
     }
 
-
+    Search search = new Search();
     Services services = new Services();
 
     protected override void OnInitialized()

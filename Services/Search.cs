@@ -4,8 +4,9 @@ namespace MTG.Services
 {
     public class Search
     {
-        string name { get; set; }
-        string cardText { get; set; }
+        public string name { get; set; }
+        public string cardText { get; set; }
+        public int range;
 
         List<string> types = new List<string>();
 

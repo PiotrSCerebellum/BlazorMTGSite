@@ -6,7 +6,7 @@ namespace MTG.Models;
 
 public partial class MyDBContext : DbContext
 {
-    //private string connectionString="host=localhost;database=postgres;user id=postgres;password=krogulecw";
+   
     public MyDBContext()
     {
     }
