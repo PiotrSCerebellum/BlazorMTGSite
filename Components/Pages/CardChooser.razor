@@ -29,7 +29,7 @@
         @foreach (string color in colors)
         {
             <input type="checkbox" name=@color value=@color />
-            <img src="./images/@color" alt="colorIcon" />
+            <img src="./images/@string.Format("{0}.svg",color)" style="width: 16px" alt="colorIcon" />
         }<br />
         <select id="colorOptions">
             <option value="exactly">Exactly these colors</option>
