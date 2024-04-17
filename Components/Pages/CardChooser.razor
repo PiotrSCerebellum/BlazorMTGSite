@@ -2,11 +2,12 @@
 @using MTG.Services
 @rendermode InteractiveServer
 @using System.Linq
+@using System.Text.Json
 
 <h3>Choose Cards</h3>
 <div class="inputField">
 <label for="cardNameInput">Card Name</label>
-<input id="cardNameInput" @bind=search.cardText type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
+<input id="cardNameInput" @bind=search.cardName type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
 </div>
 
 <div class="inputField">
@@ -15,7 +16,7 @@
 </div>
 <div class="inputField">
     <label for="cardType">Card Type</label>
-    <input id="cardType" type="search" list="typesList" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Enter a type or choose from the list">
+    <input @onchange="@OnchangeType" id="cardType" type="search" list="typesList" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Enter a type or choose from the list">
     <datalist id="typesList">
         @foreach (string type in types)
         {   //change for types and subtypes
@@ -28,10 +29,10 @@
     <div id="colorSelect">
         @foreach (string color in colors)
         {
-            <input type="checkbox" name=@color value=@color />
+            <input type="checkbox" @onchange="(args) => OnchangeColor(color, args.Value)" name=@color value=@color />
             <img src="./images/@string.Format("{0}.svg",color)" style="width: 16px" alt="colorIcon" />
         }<br />
-        <select id="colorOptions">
+        <select id="colorOptions" @onchange=@OnchangeExact>
             <option value="exactly">Exactly these colors</option>
             <option value="including">Including these colors</option>
         </select>
@@ -39,7 +40,7 @@
 </div>
 <div class="inputField">
     <label for="cmcInput">Converted Mana Cost</label>
-    <input id="cmcInput" type="number" min="0" max="32000" />
+    <input id="cmcInput" @bind=search.cmc type="number" min="0" max="32000" />
 </div>
 <div class="inputField">
     <label for="raritySelect">Rarity</label>
@@ -47,11 +48,12 @@
     @foreach (string rarity in rarities)
     {
         <label for=@rarity>@rarity</label>
-        <input type="checkbox" id=@rarity name=@rarity value=@rarity />
+            <input type="checkbox" @onchange="(args) => OnchangeRarity(rarity, args.Value)" id=@rarity name=@rarity value=@rarity />
     }
     </div>
 </div>
-<button type="submit" >Search</button>
+<button type="submit" @onclick="printSearch">Search</button>
+<p @ref=results></p>
 
 
 @code {
@@ -59,16 +61,7 @@
     public List<string> rarities;
     public List<string> types;
 
-    protected string cardName;
-    protected string cardText;
-    protected string cardType;
-    protected string[] colorCombination;
-    protected int cmc;
-    protected string rarity;
-    public void Search()
-    {
-        bool a = true;    
-    }
+    ElementReference results;
 
     Search search = new Search();
     Services services = new Services();
@@ -82,4 +75,35 @@
 
 
     }
+    public void OnchangeType(ChangeEventArgs change)
+    {
+        if (types.Contains(change.Value.ToString())){
+            search.addType(change.Value.ToString());
+        }
+    }
+    void OnchangeColor(string color, object isChecked)
+    {
+        search.colors[color] = (bool)isChecked;
+    }
+    void OnchangeRarity(string rarity, object isChecked)
+    {
+        search.rarities[rarity] = (bool)isChecked;
+    }
+    void OnchangeExact(ChangeEventArgs change)
+    {
+        if (change.Value.ToString() == "exactly")
+        {
+            search.exactColors = true;
+        }
+        else
+        {
+            search.exactColors = false;
+        }
+    }
+    public void printSearch()
+    {
+        
+        Console.WriteLine(search.toString());
+    }
+
 }

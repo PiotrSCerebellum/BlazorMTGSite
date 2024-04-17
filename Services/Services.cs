@@ -25,6 +25,20 @@ namespace MTG.Services
             return rarities;
         }
 
+        public IQueryable GetCards(Search search)
+        {
+            IQueryable cards = dbContext.Cards.Include(c => c.CardColors).Include(c => c.CardTypes)
+                .Where(w => w.Name.Contains(search.cardName) && w.Text.Contains(search.cardText) && w.Cmc == search.cmc)
+                .Select(p => new CardModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Image = p.OriginalImageUrl
+                })
+                .OrderBy(o => o.Name);
+            return cards;
+        }
+
         public IQueryable GetCardsByColor(string color,int idRange)
         {
             IQueryable cardsByColor = dbContext.CardColors.Include(c => c.Color)
