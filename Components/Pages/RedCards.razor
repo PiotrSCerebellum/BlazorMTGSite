@@ -1,4 +1,4 @@
-﻿@page "/CardList"
+﻿@page "/RedCards"
 @using MTG.Services
 @rendermode InteractiveServer
 @using System.Linq
@@ -7,23 +7,24 @@
 
 <ul class="image-list">
 
-    @foreach (MTG.Services.Services.CardModel redCard in myRedCards)
+    @foreach (Services.RedCardModel redCard in myRedCards)
     {
         <li>@redCard.Name <br /><img src=@string.Format("{0}",redCard.Image) /></li>
     }
 
 </ul>
-<CardChooser />
+
+
 @code
 {
   IQueryable myRedCards;
 
   Services services = new Services();
 
+
   protected override void OnInitialized()
   {
       base.OnInitialized();
-        myRedCards= services.GetCardsByColor("red",50);
+        myRedCards= services.GetRedCards();
   }
-
 }
