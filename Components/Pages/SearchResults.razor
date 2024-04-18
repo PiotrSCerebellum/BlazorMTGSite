@@ -1,0 +1,36 @@
+﻿@using MTG.Services
+@rendermode InteractiveServer
+@using System.Linq
+@page "/SearchResult/{searchString}"
+
+<ul class="image-list">
+
+    @foreach (Services.CardModel myCard in myCards)
+    {
+        <li>@myCard.Name <br /><img src=@string.Format("{0}",myCard.Image) /></li>
+    }
+
+</ul>
+
+
+@code
+{
+    IQueryable myCards;
+    Services services = new Services();
+    [Parameter] public string? searchString { get; set; }
+    Search search = new Search();
+
+    public void printSearch()
+    {
+
+        Console.WriteLine(search.toString());
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        search=search.FromString(searchString);
+        printSearch();
+        myCards = services.GetCards(search);
+    }
+}

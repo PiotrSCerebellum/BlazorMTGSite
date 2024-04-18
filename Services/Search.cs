@@ -6,23 +6,17 @@ namespace MTG.Services
     {
         public string cardName { get; set; }
         public string cardText { get; set; }
+        public int cmc=-1;
         public int range=50;
+        public int page=0;
         public bool exactColors = false;
 
-        List<string> types = new List<string>();
+        public List<string> types = new List<string>();
 
-        public Hashtable colors = new Hashtable() {
-        {"red", false},{"white", false},{"blue", false},{"green", false},
-            {"black", false},{"colorless",false } };
-        public int cmc;
-        public Hashtable rarities = new Hashtable() {
-        {"common", false},{"uncommon", false},{"rare", false},{"mythic", false},
-            {"special", false},{"bonus",false } };
+        public List<string> colors = new List<string>();
+
+        public List<string> rarities = new List<string>();
         
-        public void colorCheck(string color)
-        {
-            colors[color] = !(bool)colors[color];
-        }
         public void addType(string type)
         {
             types.Add(type.ToLower());
@@ -31,40 +25,92 @@ namespace MTG.Services
         {
             types.Remove(type.ToLower());
         }
-        public void raritiesCheck(string rarity)
-        {
-            rarities[rarity] = !(bool)rarities[rarity];
-        }
 
         public string toString()
         {
             string result = "";
-            result += "Name: " + cardName + "\n";
-            result += "Card Text: " + cardText + "\n";
-            result += "Range: " + range + "\n";
-            result += "Types: ";
+            result += "Name:" + cardName + ";";
+            result += "CardText:" + cardText + ";";
+            result += "Range:" + range + ";";
+            result += "Types:";
             foreach (string type in types)
-            {
-                result += type + " ";
+            {   
+                if (type != "")
+               { result += type + ","; }
             }
-            result += "\n";
-            result += "Colors: ";
-            foreach (DictionaryEntry color in colors)
+            result += ";";
+            result += "Colors:";
+            foreach (string color in colors)
             {
-                if((bool)color.Value)
-                    { result += color.Key + " "; }   
+                if (color != "")
+                    { result += color + ","; }   
             }
-            result += "\n";
-            result += "Exact Colors: " + exactColors + "\n";
-            result += "CMC: " + cmc + "\n";
-            result += "Rarities: ";
-            foreach (DictionaryEntry rarity in rarities)
+            result += ";";
+            result += "ExactColors:" + exactColors + ";";
+            result += "CMC:" + cmc + ";";
+            result += "Rarities:";
+            foreach (string rarity in rarities)
             {
-                if((bool)rarity.Value)
-                    { result += rarity.Key + " "; }
+                if (rarity != "")
+                    { result += rarity + ","; }
             }
-            result += "\n";
+            result += ";";
             return result;
+        }
+        public Search FromString(string str)
+        {
+            Search search = new Search();
+            string[] properties = str.Split(';');
+
+            foreach (string prop in properties)
+            {
+                string[] parts = prop.Split(':', 2);
+                if (parts.Length != 2)
+                {
+                    continue; // Handle malformed parts
+                }
+
+                string propertyName = parts[0].Trim();
+                string propertyValue = parts[1].Trim();
+
+                switch (propertyName)
+                {
+                    case "Name":
+                        search.cardName = propertyValue;
+                        break;
+                    case "CardText":
+                        search.cardText = propertyValue;
+                        break;
+                    case "Range":
+                        search.range = int.Parse(propertyValue);
+                        break;
+                    case "Types":
+                        search.types = propertyValue.Split(',').Where(str => !string.IsNullOrEmpty(str)).ToList();
+                        break;
+                    case "Colors":
+                        var colors = propertyValue.Split(',').Where(str => !string.IsNullOrEmpty(str)).ToList();
+                        foreach (string color in colors)
+                        {
+                            search.colors.Add(color);
+                        }
+                        break;
+                    case "ExactColors":
+                        search.exactColors = bool.Parse(propertyValue);
+                        break;
+                    case "CMC":
+                        search.cmc = int.Parse(propertyValue);
+                        break;
+                    case "Rarities":
+                        var rarities = propertyValue.Split(',').Where(str => !string.IsNullOrEmpty(str)).ToList();
+                        foreach (var rarityCode in rarities)
+                        {
+                            search.rarities.Add(rarityCode);
+                        }
+                        break;
+                }
+            }
+
+            return search;
         }
 
 

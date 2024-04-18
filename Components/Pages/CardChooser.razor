@@ -1,8 +1,9 @@
-﻿
+﻿@page "/CardSearch"
 @using MTG.Services
 @rendermode InteractiveServer
 @using System.Linq
 @using System.Text.Json
+@inject NavigationManager NavigationManager
 
 <h3>Choose Cards</h3>
 <div class="inputField">
@@ -33,14 +34,14 @@
             <img src="./images/@string.Format("{0}.svg",color)" style="width: 16px" alt="colorIcon" />
         }<br />
         <select id="colorOptions" @onchange=@OnchangeExact>
-            <option value="exactly">Exactly these colors</option>
             <option value="including">Including these colors</option>
+            <option value="exactly">Exactly these colors</option>
         </select>
     </div>
 </div>
 <div class="inputField">
     <label for="cmcInput">Converted Mana Cost</label>
-    <input id="cmcInput" @bind=search.cmc type="number" min="0" max="32000" />
+    <input id="cmcInput" @onchange="(args)=>search.cmc=Int32.Parse((args.Value).ToString())" type="number" min="0" max="32000" placeholder="eg. 2" />
 </div>
 <div class="inputField">
     <label for="raritySelect">Rarity</label>
@@ -52,14 +53,15 @@
     }
     </div>
 </div>
-<button type="submit" @onclick="printSearch">Search</button>
-<p @ref=results></p>
+<button type="submit" @onclick=@executeSearch>Search</button>
+
 
 
 @code {
     public List<string> colors;
     public List<string> rarities;
     public List<string> types;
+    bool showList = false;
 
     ElementReference results;
 
@@ -75,22 +77,32 @@
 
 
     }
-    public void OnchangeType(ChangeEventArgs change)
+    void OnchangeType(ChangeEventArgs change)
     {
+
         if (types.Contains(change.Value.ToString())){
             search.addType(change.Value.ToString());
         }
+        
     }
     void OnchangeColor(string color, object isChecked)
     {
-        search.colors[color] = (bool)isChecked;
+        if((bool)isChecked)
+            search.colors.Add(color);
+        else
+            search.colors.Remove(color);
     }
     void OnchangeRarity(string rarity, object isChecked)
     {
-        search.rarities[rarity] = (bool)isChecked;
+
+        if ((bool)isChecked)
+            search.rarities.Add(rarity);
+        else
+            search.rarities.Remove(rarity);
     }
     void OnchangeExact(ChangeEventArgs change)
     {
+       
         if (change.Value.ToString() == "exactly")
         {
             search.exactColors = true;
@@ -100,10 +112,10 @@
             search.exactColors = false;
         }
     }
-    public void printSearch()
+
+    public void executeSearch()
     {
-        
-        Console.WriteLine(search.toString());
+        NavigationManager.NavigateTo("/SearchResult/"+search.toString());
     }
 
 }
