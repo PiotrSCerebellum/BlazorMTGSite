@@ -7,7 +7,7 @@
 
 <ul class="image-list">
 
-    @foreach (Services.RedCardModel redCard in myRedCards)
+    @foreach (Services.CardModel redCard in myRedCards)
     {
         <li>@redCard.Name <br /><img src=@string.Format("{0}",redCard.Image) /></li>
     }
@@ -25,6 +25,6 @@
   protected override void OnInitialized()
   {
       base.OnInitialized();
-        myRedCards= services.GetRedCards();
+        myRedCards = services.GetCardsByName("Equinox");
   }
 }

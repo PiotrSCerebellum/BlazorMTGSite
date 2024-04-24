@@ -2,12 +2,16 @@
 @rendermode InteractiveServer
 @using System.Linq
 @page "/SearchResult/{searchString}"
+@inject NavigationManager NavigationManager
 
 <ul class="image-list">
 
     @foreach (Services.CardModel myCard in myCards)
     {
-        <li>@myCard.Name <br /><img src=@string.Format("{0}",myCard.Image) /></li>
+
+            <li>@myCard.Name <br />
+            <img src="@myCard.Image" @onclick="() => NavigateToCard(myCard.Name)" />
+            </li>
     }
 
 </ul>
@@ -19,7 +23,10 @@
     Services services = new Services();
     [Parameter] public string? searchString { get; set; }
     Search search = new Search();
-
+    private void NavigateToCard(string cardName)
+    {
+        NavigationManager.NavigateTo($"/Card/{cardName}");
+    }
     public void printSearch()
     {
 
