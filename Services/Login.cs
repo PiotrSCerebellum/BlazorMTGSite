@@ -6,7 +6,7 @@ using System;
 
 namespace MTG.Services
 {
-    public class Login
+    public class Loginn
     {
         MyDBContext dbContext = new MyDBContext();
 
