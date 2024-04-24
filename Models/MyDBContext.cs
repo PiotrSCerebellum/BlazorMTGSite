@@ -38,6 +38,8 @@ public partial class MyDBContext : DbContext
 
     public virtual DbSet<Type> Types { get; set; }
 
+    public virtual DbSet<Type> User {  get; set; }
+
     IConfiguration passwordConfig = new ConfigurationBuilder()
             .AddUserSecrets<MyDBContext>()
             .Build();
@@ -349,6 +351,23 @@ public partial class MyDBContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("timestamp(0) without time zone")
                 .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Username).HasName("username");
+
+            entity.ToTable("users");
+
+            entity.Property(e => e.Username)
+                .HasColumnType("character varying")
+                .HasColumnName("username");
+            entity.Property(e => e.Password)
+                .HasColumnType("character varying")
+                .HasColumnName("password");
+            entity.Property(e => e.Salt)
+                .HasColumnType("character varying")
+                .HasColumnName("salt");
         });
 
         OnModelCreatingPartial(modelBuilder);
