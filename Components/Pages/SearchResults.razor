@@ -8,8 +8,9 @@
 
     @foreach (Services.CardModel myCard in myCards)
     {
-            <li>
-                @myCard.Name <br /><img onclick=@(() => NavigationManager.NavigateTo("/") src=@string.Format("{0}",myCard.Image) />
+
+            <li>@myCard.Name <br />
+            <img src="@myCard.Image" @onclick="() => NavigateToCard(myCard.Name)" />
             </li>
     }
 
@@ -22,7 +23,10 @@
     Services services = new Services();
     [Parameter] public string? searchString { get; set; }
     Search search = new Search();
-
+    private void NavigateToCard(string cardName)
+    {
+        NavigationManager.NavigateTo($"/Card/{cardName}");
+    }
     public void printSearch()
     {
 
