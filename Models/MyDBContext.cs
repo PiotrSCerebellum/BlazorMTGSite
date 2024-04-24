@@ -38,7 +38,7 @@ public partial class MyDBContext : DbContext
 
     public virtual DbSet<Type> Types { get; set; }
 
-    public virtual DbSet<Type> User {  get; set; }
+    public virtual DbSet<User> Users {  get; set; }
 
     IConfiguration passwordConfig = new ConfigurationBuilder()
             .AddUserSecrets<MyDBContext>()

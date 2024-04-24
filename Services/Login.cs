@@ -18,7 +18,7 @@ namespace MTG.Services
 
         public Boolean CheckUser(User user)
         {
-            User userAttempt = dbContext.Users.FirstOrDefault(u => u.Name == user.Name); //this will not work bc we do not have user in db
+            User userAttempt = dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
 
             if (userAttempt != null)
             {
