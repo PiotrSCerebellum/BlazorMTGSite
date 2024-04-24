@@ -1,0 +1,7 @@
+create table users
+(
+    username varchar not null
+        constraint username
+            primary key,
+    password varchar
+);
