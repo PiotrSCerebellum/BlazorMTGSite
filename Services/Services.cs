@@ -129,21 +129,25 @@ namespace MTG.Services
               .OrderBy(o => o.Name);
         }
 
-        public IQueryable GetCardsByName(string name)
+        public IQueryable<CardModel> GetCardsByName(string search)
         {
-            IQueryable cardsByName = dbContext.Cards
-                .Where(w => w.Name.Contains(name))
-                .Where(w => w.OriginalImageUrl != null)
-                .Select(p => new CardModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Image = p.OriginalImageUrl,
-                    CardText=p.Text,
-                    CardCost=p.ManaCost
-    })
-                .OrderBy(o => o.Name);
-            return cardsByName;
+            Console.WriteLine(search.ToString());
+            IQueryable<Card> cards = dbContext.Cards;
+            cards = cards.Where(w => w.Name==search);
+            cards = cards.Where(w => w.OriginalImageUrl != null);
+            foreach (var item in cards)
+            {
+                Console.WriteLine($"{item.Name}");
+            }
+            return cards.Select(p => new CardModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Image = p.OriginalImageUrl,
+                CardText=p.Text,
+                CardCost = p.ManaCost,
+                SetCode=p.SetCode
+            });
         }
 
 
@@ -169,6 +173,7 @@ namespace MTG.Services
             public string? CardCost { get; init; }
             public string? Image { get; init; }
             public string? Color { get; init; }
+            public string? SetCode { get; init; }
 
         }
 

@@ -3,36 +3,44 @@
 @using System.Linq
 @page "/Card/{searchString}"
 
-
-<ul class="image-list">
-
-    @foreach (Services.CardModel myCard in myCards)
+<h1>Card Page for @searchString</h1>
+<div class="card-display">
+    @if (selectedCard != null)
     {
-        <img isVisible="false" src=@string.Format("{0}",myCard.Image) />
-        
+        <img src="@selectedCard.Image" />
+        <h3>@selectedCard.Name @selectedCard.CardCost</h3>
+        <p>@selectedCard.CardText</p>
     }
+</div>
 
+<ul class="card-list">
+    @foreach (Services.CardModel card in myCards)
+    {
+        <li @onclick="() => SelectCard(card)">
+            @card.Name @card.SetCode
+        </li>
+    }
 </ul>
 
 
 @code
 {
-    IQueryable myCards;
+    IQueryable<Services.CardModel> myCards;
     Services services = new Services();
     [Parameter] public string? searchString { get; set; }
-    Search search = new Search();
     int cardNumber;
-
-    public void printSearch()
+    private Services.CardModel selectedCard;
+    private void SelectCard(Services.CardModel card)
     {
-
-        Console.WriteLine(search.toString());
+        selectedCard = card;
     }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        printSearch();
         myCards = services.GetCardsByName(searchString);
+        selectedCard = myCards.FirstOrDefault();
     }
+
+
 }
