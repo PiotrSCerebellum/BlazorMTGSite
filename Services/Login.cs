@@ -20,23 +20,23 @@ namespace MTG.Services
         {
             User userAttempt = dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
 
-        //    if (userAttempt != null)
-        //    {
-        //        // Check if password matches
-        //        if (user.Password == userAttempt.Password)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-        
+            if (userAttempt != null)
+            {
+                // Check if password matches
+                if (user.Password == userAttempt.Password)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
