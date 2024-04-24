@@ -1,6 +1,7 @@
 ﻿using MTG.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using System.Drawing;
 
 namespace MTG.Services
 {
@@ -128,6 +129,23 @@ namespace MTG.Services
               .OrderBy(o => o.Name);
         }
 
+        public IQueryable GetCardsByName(string name)
+        {
+            IQueryable cardsByName = dbContext.Cards
+                .Where(w => w.Name.Contains(name))
+                .Where(w => w.OriginalImageUrl != null)
+                .Select(p => new CardModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Image = p.OriginalImageUrl,
+                    CardText=p.Text,
+                    CardCost=p.ManaCost
+    })
+                .OrderBy(o => o.Name);
+            return cardsByName;
+        }
+
 
         public IQueryable GetCardsByColor(string color)
         {
@@ -147,6 +165,8 @@ namespace MTG.Services
         {
             public long? Id { get; init; }
             public string? Name { get; init; }
+            public string? CardText { get; init; }
+            public string? CardCost { get; init; }
             public string? Image { get; init; }
             public string? Color { get; init; }
 

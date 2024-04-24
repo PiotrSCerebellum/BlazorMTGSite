@@ -17,27 +17,27 @@ namespace MTG.Services
             public string? Password { get; init; }
         }
 
-        public Boolean CheckUser(User user)
-        {
-            User userAttempt = dbContext.Users.FirstOrDefault(u => u.Name == user.Name); //this will not work bc we do not have user in db
+        //public Boolean CheckUser(User user)
+        //{
+        //    User userAttempt = dbContext.Users.FirstOrDefault(u => u.Name == user.Name); //this will not work bc we do not have user in db
 
-            if (userAttempt != null)
-            {
-                // Check if password matches
-                if (user.Password == userAttempt.Password)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //    if (userAttempt != null)
+        //    {
+        //        // Check if password matches
+        //        if (user.Password == userAttempt.Password)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
         
     }
 }
