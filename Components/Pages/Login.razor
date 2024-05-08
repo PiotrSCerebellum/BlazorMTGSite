@@ -25,9 +25,12 @@
 
     public void logIn()
     {
+        login.CreatePasswordHash(loggedUser);
+        /*
         if (login.CheckUser(loggedUser))
-        {
+        {   
             NavigationManager.NavigateTo("/");
-        }    
+        }   
+        */
     }
 }

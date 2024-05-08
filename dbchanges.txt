@@ -6,3 +6,6 @@ create table users
     password varchar,
     salt varchar
 );
+
+INSERT INTO public.users (username, password, salt)
+VALUES ('admin', 'ZW5VkeTWlt4jMza9DgpwujC0wNfFe7m3VabkgQ781uc', 'KTqJk3txCk/gK34opSBu/Q==');

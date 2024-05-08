@@ -63,7 +63,7 @@ namespace MTG.Services
             }
         }
 
-        public static void CreatePasswordHash(User user)
+        public void CreatePasswordHash(User user)
         {
             MyDBContext dbContext = new MyDBContext();
 
