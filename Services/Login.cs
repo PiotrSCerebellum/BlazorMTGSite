@@ -11,8 +11,7 @@ namespace MTG.Services
 {
     public class Loginn
     {
-        MyDBContext dbContext = new MyDBContext();
-
+        
         public class UserModel
         {
             public string? Name { get; init; }
@@ -21,6 +20,8 @@ namespace MTG.Services
 
         public Boolean CheckUser(User user)
         {
+            MyDBContext dbContext = new MyDBContext();
+
             User userAttempt = dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
 
             if (userAttempt != null)
@@ -47,6 +48,8 @@ namespace MTG.Services
 
         public static bool ValidatePassword(User user, string storedSalt)
         {
+            MyDBContext dbContext = new MyDBContext();
+
             User userAttempt = dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
             if (userAttempt != null)
             {
@@ -62,6 +65,8 @@ namespace MTG.Services
 
         public static void CreatePasswordHash(User user)
         {
+            MyDBContext dbContext = new MyDBContext();
+
             using (var rng = new RNGCryptoServiceProvider())
             {
                 var saltBytes = new byte[SaltSize];
