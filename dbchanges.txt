@@ -4,7 +4,8 @@ create table users
         constraint username
             primary key,
     password varchar,
-    salt varchar
+    salt varchar,
+    collection varchar
 );
 
 INSERT INTO public.users (username, password, salt)

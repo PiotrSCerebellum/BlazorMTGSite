@@ -368,6 +368,9 @@ public partial class MyDBContext : DbContext
             entity.Property(e => e.Salt)
                 .HasColumnType("character varying")
                 .HasColumnName("salt");
+            entity.Property(e => e.Collection)
+                .HasColumnType("character varying")
+                .HasColumnName("collection");
         });
 
         OnModelCreatingPartial(modelBuilder);

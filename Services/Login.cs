@@ -42,6 +42,7 @@ namespace MTG.Services
             }
         }
         // attempt to hash passwords
+        // the stored salt here is just the salt from user, we can change it later to use just user as input if needed
 
         private const int SaltSize = 16; // 128 bit 
         private const int KeySize = 32; // 256 bit
@@ -63,6 +64,7 @@ namespace MTG.Services
             }
         }
 
+        // this can be used for registering a new user
         public void CreatePasswordHash(User user)
         {
             MyDBContext dbContext = new MyDBContext();
