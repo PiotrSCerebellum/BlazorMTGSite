@@ -7,7 +7,7 @@
 
 <ul class="image-list">
 
-    @foreach (Services.CardModel redCard in myRedCards)
+    @foreach (Search.CardModel redCard in myRedCards)
     {
         <li>@redCard.Name <br /><img src=@string.Format("{0}",redCard.Image) /></li>
     }
@@ -19,7 +19,7 @@
 {
   IQueryable myRedCards;
 
-  Services services = new Services();
+  Search services = new Search();
 
 
   protected override void OnInitialized()

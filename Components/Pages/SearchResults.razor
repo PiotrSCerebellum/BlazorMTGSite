@@ -6,7 +6,7 @@
 
 <ul class="image-list">
 
-    @foreach (Services.CardModel myCard in myCards)
+    @foreach (Search.CardModel myCard in myCards)
     {
 
             <li>@myCard.Name <br />
@@ -17,27 +17,3 @@
 </ul>
 
 
-@code
-{
-    IQueryable myCards;
-    Services services = new Services();
-    [Parameter] public string? searchString { get; set; }
-    Search search = new Search();
-    private void NavigateToCard(string cardName)
-    {
-        NavigationManager.NavigateTo($"/Card/{cardName}");
-    }
-    public void printSearch()
-    {
-
-        Console.WriteLine(search.toString());
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        search=search.FromString(searchString);
-        printSearch();
-        myCards = services.GetCards(search);
-    }
-}

@@ -14,7 +14,7 @@
 </div>
 
 <ul class="card-list">
-    @foreach (Services.CardModel card in myCards)
+    @foreach (Search.CardModel card in myCards)
     {
         <li @onclick="() => SelectCard(card)">
             @card.Name @card.SetCode
@@ -22,25 +22,3 @@
     }
 </ul>
 
-
-@code
-{
-    IQueryable<Services.CardModel> myCards;
-    Services services = new Services();
-    [Parameter] public string? searchString { get; set; }
-    int cardNumber;
-    private Services.CardModel selectedCard;
-    private void SelectCard(Services.CardModel card)
-    {
-        selectedCard = card;
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        myCards = services.GetCardsByName(searchString);
-        selectedCard = myCards.FirstOrDefault();
-    }
-
-
-}

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MTG.Models;
-using static MTG.Services.Services;
+using static MTG.Services.Search;
 using System.Drawing;
 using System;
 using System.Security.Cryptography;
