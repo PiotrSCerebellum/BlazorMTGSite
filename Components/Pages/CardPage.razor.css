@@ -1,0 +1,39 @@
+﻿.card-display {
+    display: flex; 
+    align-items: flex-start;
+    gap: 20px; 
+}
+
+.card-display img {
+        width: auto; 
+        height: auto; 
+    }
+
+.card-details {
+    background-color: #e6f2ff; 
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+.printing-details {
+    background-color: #f5f5f5; 
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+.printing-details .card-list {
+    list-style-type: none;
+    padding-left: 0;
+
+}
+
+.printing-details .card-list li {
+        padding: 10px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        outline: none; 
+    }
+
+.printing-details .card-list li:hover { 
+            background-color: #d9e8ff;
+        }

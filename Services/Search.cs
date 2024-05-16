@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Drawing;
+//using MoreLinq;
 
 namespace MTG.Services
 {
@@ -117,9 +118,9 @@ namespace MTG.Services
             cards = cards.Where(w=>w.OriginalImageUrl!=null);
             //Crashes when trying to get distinct cards
             //cards = cards.DistinctBy(card => card.Name);
+            cards = cards.OrderBy(o => o.Name);
             cards = cards.Skip(search.range * search.page);
             cards = cards.Take(search.range);
-            cards= cards.OrderBy(o => o.Name);
             return cards.Select(p => new CardModel
             {
                 Id = p.Id,
