@@ -7,7 +7,7 @@ namespace MTG.Services
         public string cardName { get; set; }
         public string cardText { get; set; }
         public int cmc=-1;
-        public int range=50;
+        public int range=52;
         public int page=0;
         public bool exactColors = false;
 
@@ -32,6 +32,7 @@ namespace MTG.Services
             result += "Name:" + cardName + ";";
             result += "CardText:" + cardText + ";";
             result += "Range:" + range + ";";
+            result += "Page:" + page + ";";
             result += "Types:";
             foreach (string type in types)
             {   
@@ -83,6 +84,9 @@ namespace MTG.Services
                         break;
                     case "Range":
                         search.range = int.Parse(propertyValue);
+                        break;
+                    case "Page":
+                        search.page = int.Parse(propertyValue);
                         break;
                     case "Types":
                         search.types = propertyValue.Split(',').Where(str => !string.IsNullOrEmpty(str)).ToList();

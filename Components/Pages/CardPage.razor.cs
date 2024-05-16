@@ -15,6 +15,10 @@ namespace MTG.Components.Pages
         {
             selectedCard = card;
         }
+        protected void AddCard()
+        {
+            // Add card to user collection
+        }
 
         protected override void OnInitialized()
         {

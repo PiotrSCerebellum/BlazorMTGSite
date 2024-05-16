@@ -7,12 +7,13 @@
 <ul class="image-list">
 
     @foreach (Search.CardModel myCard in myCards)
-    {
-
-            <li>@myCard.Name <br />
+    {      
             <img src="@myCard.Image" @onclick="() => NavigateToCard(myCard.Name)" />
-            </li>
     }
+    <div class="next-button">
+        <button @onclick="() => NextPage()" disabled="@(!CanNavigateNext())">Next</button>
+        <button @onclick="() => PreviousPage()" disabled="@(!CanNavigatePrevious())">Previous</button>
+    </div>
 
 </ul>
 

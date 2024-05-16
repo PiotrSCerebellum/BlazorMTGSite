@@ -1,9 +1,8 @@
 ﻿@page "/CardSearch"
-@using MTG.Services
 @rendermode InteractiveServer
-@using System.Linq
-@using System.Text.Json
 @inject NavigationManager NavigationManager
+@using MTG.Services
+@using System.Linq
 
 <h3>Choose Cards</h3>
 <div class="inputField">
@@ -30,8 +29,12 @@
     <div id="colorSelect">
         @foreach (string color in colors)
         {
-            <input type="checkbox" @onchange="(args) => OnchangeColor(color, args.Value)" name=@color value=@color />
-            <img src="./images/@string.Format("{0}.svg",color)" style="width: 16px" alt="colorIcon" />
+            <label class="color-checkbox">
+                <input type="checkbox" @onchange="(args) => OnchangeColor(color, args.Value)" name="@color" value="@color" />
+                <span class="checkbox-icon">
+                    <img src="./images/@string.Format("{0}.svg",color)" alt="@color" />
+                </span>
+            </label>
         }<br />
         <select id="colorOptions" @onchange=@OnchangeExact>
             <option value="including">Including these colors</option>
@@ -45,12 +48,14 @@
 </div>
 <div class="inputField">
     <label for="raritySelect">Rarity</label>
-    <div id="raritySelect">
-    @foreach (string rarity in rarities)
-    {
-        <label for=@rarity>@rarity</label>
-            <input type="checkbox" @onchange="(args) => OnchangeRarity(rarity, args.Value)" id=@rarity name=@rarity value=@rarity />
-    }
+    <div id="raritySelect" class="rarity-row">
+        @foreach (string rarity in rarities)
+        {
+            <div class="rarity-item">
+                <label for="@rarity" class="rarity-label">@rarity</label>
+                <input type="checkbox" @onchange="(args) => OnchangeRarity(rarity, args.Value)" id="@rarity" name="@rarity" value="@rarity" class="rarity-checkbox" />
+            </div>
+        }
     </div>
 </div>
 <button type="submit" @onclick=@executeSearch>Search</button>

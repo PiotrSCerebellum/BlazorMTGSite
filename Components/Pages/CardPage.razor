@@ -8,17 +8,26 @@
     @if (selectedCard != null)
     {
         <img src="@selectedCard.Image" />
-        <h3>@selectedCard.Name @selectedCard.CardCost</h3>
-        <p>@selectedCard.CardText</p>
+        <div class="card-details">
+            <h3>@selectedCard.Name @selectedCard.CardCost</h3>
+            <p>@selectedCard.CardText</p>
+            
+        </div>
+        <div class="printing-details">
+        <h3>Printings</h3>
+        <ul class="card-list">
+            @foreach (Search.CardModel card in myCards)
+            {
+                <li @onclick="() => SelectCard(card)">
+                    @card.Name @card.SetCode
+                </li>
+            }
+        </ul>
+        </div>
     }
 </div>
+<br />
+<button @onclick="() => AddCard()">Add to Deck</button>
 
-<ul class="card-list">
-    @foreach (Search.CardModel card in myCards)
-    {
-        <li @onclick="() => SelectCard(card)">
-            @card.Name @card.SetCode
-        </li>
-    }
-</ul>
+
 
