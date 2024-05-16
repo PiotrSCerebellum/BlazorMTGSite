@@ -1,7 +1,6 @@
 ﻿using MTG.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
-using System.Drawing;
+
 //using MoreLinq;
 
 namespace MTG.Services
