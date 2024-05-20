@@ -1,4 +1,4 @@
---drop table users
+--drop table users;
 create table users
 (
     username varchar not null
