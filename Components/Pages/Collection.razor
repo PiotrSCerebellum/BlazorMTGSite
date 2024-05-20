@@ -1,0 +1,41 @@
+﻿@page "/Collection"
+@inject NavigationManager NavigationManager
+@using MTG.Services
+
+<h3>Collection</h3>
+
+<ul class="image-list">
+    @foreach (var myCard in myCards)
+    {
+ 
+        <li>
+            <img src="@myCard.Image" @onclick="() => NavigateToCard(myCard.Name)" />
+            <button>Remove</button>
+            <br />
+        </li>
+    }
+</ul>
+
+
+
+@code {
+    IQueryable<Services.Search.CardModel> myCards;
+    Search services = new Search();
+
+    private void NavigateToCard(string cardName)
+    {
+        NavigationManager.NavigateTo($"/Card/{cardName}");
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        string username = "admin"; //get proper username
+        myCards = services.GetCollection(username);
+        foreach (var card in myCards)
+        {
+            Console.WriteLine(card.Name);
+        }
+    }
+
+}
