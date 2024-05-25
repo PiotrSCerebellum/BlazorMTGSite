@@ -155,14 +155,9 @@ namespace MTG.Services
 
         public IQueryable<CardModel> GetCardsByName(string search)
         {
-            Console.WriteLine(search.ToString());
             IQueryable<Card> cards = dbContext.Cards;
             cards = cards.Where(w => w.Name==search);
             cards = cards.Where(w => w.OriginalImageUrl != null);
-            foreach (var item in cards)
-            {
-                Console.WriteLine($"{item.Name}");
-            }
             return cards.Select(p => new CardModel
             {
                 Id = p.Id,
@@ -174,7 +169,7 @@ namespace MTG.Services
             });
         }
 
-        public IQueryable<CardModel> GetCardsId(int search)
+        public IQueryable<CardModel> GetCardsById(int search)
         {
             IQueryable<Card> cards = dbContext.Cards;
             cards = cards.Where(w => w.Id == search);
