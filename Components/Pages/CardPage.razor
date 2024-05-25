@@ -2,6 +2,9 @@
 @rendermode InteractiveServer
 @using System.Linq
 @page "/Card/{searchString}"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStorage
 
 <h1>Card Page for @searchString</h1>
 <div class="card-display">
@@ -9,14 +12,14 @@
     {
         <img src="@selectedCard.Image" />
         <div class="card-details">
-            <h3>@selectedCard.Name @selectedCard.CardCost</h3>
-            <p>@selectedCard.CardText</p>
+            <h3>@selectedCard.Name @selectedCard.ConvertedManaCost</h3>
+            <p>@selectedCard.Text</p>
             
         </div>
         <div class="printing-details">
         <h3>Printings</h3>
         <ul class="card-list">
-            @foreach (Search.CardModel card in myCards)
+            @foreach (Models.Card card in myCards)
             {
                 <li @onclick="() => SelectCard(card)">
                     @card.Name @card.SetCode
@@ -27,7 +30,7 @@
     }
 </div>
 <br />
-<button @onclick="() => AddCard()">Add to Deck</button>
+<button @onclick="() => AddCardTest()">Add to Deck</button>
 
 
 

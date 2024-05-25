@@ -4,7 +4,9 @@
 @rendermode InteractiveServer
 @using System.Linq
 @using System.Text.Json
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStorage;
 
 <h3>Login</h3>
 <div class="inputField">
@@ -32,5 +34,8 @@
             NavigationManager.NavigateTo("/");
         }   
         */
+    // Session code
+    ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
+    
     }
 }

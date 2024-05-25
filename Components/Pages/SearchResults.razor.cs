@@ -8,7 +8,7 @@ namespace MTG.Components.Pages
     public partial class SearchResults
     {
 
-        IQueryable<Services.Search.CardModel> myCards;
+        IQueryable<Models.Card> myCards;
         Search services = new Search();
         [Parameter] public string? searchString { get; set; }
         SearchParameters search = new SearchParameters();
