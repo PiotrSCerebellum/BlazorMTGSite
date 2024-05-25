@@ -10,7 +10,10 @@
 <div class="card-display">
     @if (selectedCard != null)
     {
-        <img src="@selectedCard.Image" />
+        <div>
+            <img src="@selectedCard.Image" />
+            <button @onclick="() => AddCardTest()">Add to Deck</button>
+        </div>
         <div class="card-details">
             <h3>@selectedCard.Name @selectedCard.ConvertedManaCost</h3>
             <p>@selectedCard.Text</p>
@@ -30,7 +33,7 @@
     }
 </div>
 <br />
-<button @onclick="() => AddCardTest()">Add to Deck</button>
+
 
 
 

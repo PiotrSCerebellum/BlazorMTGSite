@@ -174,10 +174,6 @@ namespace MTG.Services
             IQueryable<Card> cards = dbContext.Cards;
             cards = cards.Where(w => w.Name==search);
             cards = cards.Where(w => w.OriginalImageUrl != null);
-            foreach (var item in cards)
-            {
-                Console.WriteLine($"{item.Name}");
-            }
             return cards.Select(p => new Models.Card
             {
                 Id = p.Id,
@@ -219,17 +215,6 @@ namespace MTG.Services
                 .OrderBy(o => o.Name);
             return cardsByColor;
         }
-        //public class CardModel
-        //{
-        //    public long? Id { get; init; }
-        //    public string? Name { get; init; }
-        //    public string? CardText { get; init; }
-        //    public string? CardCost { get; init; }
-        //    public string? Image { get; init; }
-        //    public string? Color { get; init; }
-        //    public string? SetCode { get; init; }
-
-        //}
 
         public IQueryable GetCardsByType(string type, int idRange)
         {
