@@ -91,7 +91,38 @@ namespace MTG.Services
             Console.WriteLine("Adding card to collection"+user.Collection);
             await dbContext.SaveChangesAsync();
         }
+        public async Task RemoveCardFromCollection(string username, long cardIdToRemove)
+        {
+            using var dbContext = new MyDBContext();
 
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                throw new ArgumentException($"User with username '{username}' not found.");
+            }
+
+            var existingCollection = user.Collection != null
+                ? user.Collection.Split(',').Select(long.Parse).ToList()
+                : new List<long>();
+
+            if (existingCollection.Contains(cardIdToRemove))
+            {
+                existingCollection.Remove(cardIdToRemove);
+
+                user.Collection = existingCollection.Count > 0
+                    ? string.Join(",", existingCollection)
+                    : null; 
+
+                Console.WriteLine("Removing card from collection. New collection: " + user.Collection);
+
+                await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                Console.WriteLine($"Card with ID {cardIdToRemove} not found in the collection of user '{username}'.");
+               
+            }
+        }
 
 
         public IQueryable<Models.Card> GetCards(SearchParameters search)
