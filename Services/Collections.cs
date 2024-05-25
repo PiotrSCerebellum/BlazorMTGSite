@@ -16,5 +16,10 @@ namespace MTG.Services
             string collectionString = string.Join(",", collection);
             return collectionString;
         }
+        public void AddCardToCollection(int cardId, string collection)
+        {
+            
+            
+        }
     }
 }

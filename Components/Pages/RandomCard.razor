@@ -19,14 +19,14 @@
 @code
 {
     Search services = new Search();
-    IQueryable<Services.Search.CardModel> randomCard;
+    IQueryable<Models.Card> randomCard;
 
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         int rnd= new Random().Next(1, 5000);
-        randomCard = services.GetCardsById(rnd);
+        randomCard = services.GetCardById(rnd);
     }
     protected override void OnAfterRender(bool firstRender)
     {

@@ -7,7 +7,7 @@
 
 <ul class="image-list">
 
-    @foreach (Search.CardModel redCard in myRedCards)
+    @foreach (Models.Card redCard in myRedCards)
     {
         <li>@redCard.Name <br /><img src=@string.Format("{0}",redCard.Image) /></li>
     }

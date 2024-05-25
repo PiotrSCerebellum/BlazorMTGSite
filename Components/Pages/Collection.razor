@@ -1,6 +1,7 @@
 ﻿@page "/Collection"
 @inject NavigationManager NavigationManager
 @using MTG.Services
+@using MTG.Models
 
 <h3>Collection</h3>
 
@@ -19,7 +20,7 @@
 
 
 @code {
-    IQueryable<Services.Search.CardModel> myCards;
+    IQueryable<Models.Card> myCards;
     Search services = new Search();
 
     private void NavigateToCard(string cardName)
