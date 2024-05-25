@@ -1,3 +1,4 @@
+--drop table users;
 create table users
 (
     username varchar not null
@@ -8,5 +9,5 @@ create table users
     collection varchar
 );
 
-INSERT INTO public.users (username, password, salt)
-VALUES ('admin', 'ZW5VkeTWlt4jMza9DgpwujC0wNfFe7m3VabkgQ781uc', 'KTqJk3txCk/gK34opSBu/Q==');
+INSERT INTO public.users (username, password, salt, collection)
+VALUES ('admin', 'ZW5VkeTWlt4jMza9DgpwujC0wNfFe7m3VabkgQ781uc', 'KTqJk3txCk/gK34opSBu/Q==','1,2,3');

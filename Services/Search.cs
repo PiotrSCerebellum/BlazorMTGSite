@@ -1,5 +1,6 @@
 ﻿using MTG.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 //using MoreLinq;
 
@@ -25,6 +26,29 @@ namespace MTG.Services
             List<string> rarities = dbContext.Rarities.Select(p => p.Name).ToList();
 
             return rarities;
+        }
+        public IQueryable<CardModel> GetCollection(string username)
+        {
+            Console.WriteLine(username);
+            string collection = dbContext.Users
+                .Where(w => w.Username == username)
+                .Select(p => p.Collection)
+                .FirstOrDefault();
+            Console.WriteLine(collection);
+            string[] subs = collection.Split(',');
+
+            foreach (string sub in subs)
+            {
+                Console.WriteLine(sub);
+            }//
+            var cardIds = subs.Select(int.Parse).ToList(); // Collect IDs first
+            IQueryable<Card> cards = dbContext.Cards.Where(w => cardIds.Contains((int)w.Id));
+            return cards.Select(p => new CardModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Image = p.OriginalImageUrl
+            });
         }
 
         public IQueryable<CardModel> GetCards(SearchParameters search)

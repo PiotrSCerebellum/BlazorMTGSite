@@ -11,7 +11,7 @@ namespace MTG.Services
             return subs;
         }
 
-        public static string CollectionTosString(string[] collection)
+        public static string CollectionToString(string[] collection)
         {
             string collectionString = string.Join(",", collection);
             return collectionString;
