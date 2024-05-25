@@ -18,7 +18,7 @@ namespace MTG.Services
             public string? Password { get; init; }
         }
 
-        public Boolean CheckUser(User user)
+        public Boolean CheckUser(User user, HttpContext httpContext)
         {
             MyDBContext dbContext = new MyDBContext();
 
@@ -29,6 +29,7 @@ namespace MTG.Services
                 // Check if password matches
                 if (user.Password == userAttempt.Password)
                 {
+                    httpContext.Session.SetString("UserId", userAttempt.Username); // this  Store username in session
                     return true;
                 }
                 else
