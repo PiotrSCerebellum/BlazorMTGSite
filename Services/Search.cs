@@ -174,6 +174,22 @@ namespace MTG.Services
             });
         }
 
+        public IQueryable<CardModel> GetCardsId(int search)
+        {
+            IQueryable<Card> cards = dbContext.Cards;
+            cards = cards.Where(w => w.Id == search);
+            cards = cards.Where(w => w.OriginalImageUrl != null);
+            return cards.Select(p => new CardModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Image = p.OriginalImageUrl,
+                CardText = p.Text,
+                CardCost = p.ManaCost,
+                SetCode = p.SetCode
+            });
+        }
+
 
         public IQueryable GetCardsByColor(string color)
         {
