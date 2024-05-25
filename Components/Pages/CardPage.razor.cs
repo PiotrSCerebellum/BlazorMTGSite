@@ -12,7 +12,7 @@ namespace MTG.Components.Pages
         [Parameter] public string? searchString { get; set; }
         int cardNumber;
         private Models.Card selectedCard;
-        string userName;
+        string? userName;
         private void SelectCard(Models.Card card)
         {
             selectedCard = card;
@@ -26,7 +26,21 @@ namespace MTG.Components.Pages
             }
             if (userName != null)
             {
+               await services.AddCardToCollection(userName, selectedCard.Id);
+            }
+        }
+        protected async Task AddCardTest()
+        {
+            await ProtectedSessionStorage.SetAsync("User", "admin");
+            var result = await ProtectedSessionStorage.GetAsync<string>("User");
+            if (result.Success)
+            {
+                userName = result.Value;
+            }
+            if (userName != null)
+            {
                 services.AddCardToCollection(userName, selectedCard.Id);
+               Console.WriteLine(services.GetCollection(userName));
             }
         }
 
