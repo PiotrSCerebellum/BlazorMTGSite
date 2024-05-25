@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MTG.Components;
 using MTG.Components.Account;
 using MTG.Data;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,10 +67,14 @@ else
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-app.UseAntiforgery();
-app.UseSession();
+app.UseCookiePolicy(); // Added for cookie policy handling
+app.UseRouting();      // Added for routing
+app.UseAuthentication(); // Added for user authentication
+app.UseAuthorization();  // Added for user authorization
+app.UseSession();         // Session middleware MUST come after UseRouting
+app.UseAntiforgery();    // Antiforgery middleware should come after UseSession
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
