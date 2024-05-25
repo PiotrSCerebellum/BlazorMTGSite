@@ -23,10 +23,14 @@ namespace MTG.Components.Pages
             if (result.Success)
             {
                 userName = result.Value;
+                Console.WriteLine("This is adding card to collection of: "+userName);
             }
             if (userName != null)
             {
                await services.AddCardToCollection(userName, selectedCard.Id);
+               Console.WriteLine("added card"+selectedCard.Name+selectedCard.Id+" to "+userName);
+               //NavigationManager.NavigateTo("/collection");
+
             }
         }
         //Works remeber to change in production
