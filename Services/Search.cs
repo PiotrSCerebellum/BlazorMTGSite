@@ -29,11 +29,12 @@ namespace MTG.Services
         }
         public IQueryable<Models.Card> GetCollection(string username)
         {
+            
             string collection = dbContext.Users
                 .Where(w => w.Username == username)
                 .Select(p => p.Collection)
                 .FirstOrDefault();
-            Console.WriteLine(collection);
+            Console.WriteLine("Getting collection of" + username + collection);
             string[] subs = collection.Split(',');
 
             var cardIds = subs.Select(int.Parse).ToList(); // Collect IDs first
@@ -44,6 +45,27 @@ namespace MTG.Services
                 Name = p.Name,
                 Image = p.OriginalImageUrl
             });
+        }
+        public async Task<IQueryable<Models.Card>> GetCollectionAsync(string username)
+        {
+            var user = await dbContext.Users.FirstOrDefaultAsync(w => w.Username == username);
+
+            if (user == null || user.Collection == null)
+            {
+                return Enumerable.Empty<Models.Card>().AsQueryable(); // Return empty result if no collection
+            }
+
+            var cardIds = user.Collection.Split(',').Select(long.Parse).ToList();
+
+            // Efficiently fetch all cards in a single query
+            var cards = await dbContext.Cards.Where(w => cardIds.Contains(w.Id)).ToListAsync();
+
+            return cards.Select(p => new Models.Card
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Image = p.OriginalImageUrl
+            }).AsQueryable();
         }
         public async Task AddCardToCollection(string username, long cardIdToAdd)
         {
@@ -59,9 +81,14 @@ namespace MTG.Services
                 ? user.Collection.Split(',').Select(long.Parse).ToList()
                 : new List<long>();
             // Add the new card IDs, avoiding duplicates
+            foreach(var card in existingCollection)
+            {
+                Console.WriteLine(card);
+            }
             existingCollection.Add(cardIdToAdd);
             // Update the collection in the database
             user.Collection = string.Join(",", existingCollection);
+            Console.WriteLine("Adding card to collection"+user.Collection);
             await dbContext.SaveChangesAsync();
         }
 

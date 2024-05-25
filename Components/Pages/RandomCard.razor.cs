@@ -13,6 +13,8 @@ namespace MTG.Components.Pages
             base.OnInitialized();
             int rnd = new Random().Next(1, 5000);
             randomCard = services.GetCardById(rnd);
+            Thread.Sleep(1);
+            Console.WriteLine("Random card is: " + randomCard.First().Name);
         }
         protected override void OnAfterRender(bool firstRender)
         {
