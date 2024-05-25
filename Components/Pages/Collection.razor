@@ -54,14 +54,21 @@
         {
             username = result.Value;
         }
-
-        if (!string.IsNullOrEmpty(username))
+        if (username == null)
         {
-            myCards = await services.GetCollectionAsync(username);
+            NavigationManager.NavigateTo("/Login");
         }
-        foreach (var card in myCards)
+        else
         {
-            Console.WriteLine(card.Name);
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                myCards = await services.GetCollectionAsync(username);
+            }
+            foreach (var card in myCards)
+            {
+                Console.WriteLine(card.Name);
+            }
         }
     }
 
