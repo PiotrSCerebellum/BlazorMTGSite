@@ -1,0 +1,40 @@
+﻿@page "/RandomCard"
+@using MTG.Services
+@rendermode InteractiveServer
+@using System.Linq
+@inject NavigationManager NavigationManager
+
+
+
+<ul class="image-list">
+
+
+    @foreach(var card in randomCard)
+    {
+        <li>@card.Name <br /><img src=@string.Format("{0}",card.Image) /></li>
+    }
+</ul>
+
+
+@code
+{
+    Search services = new Search();
+    IQueryable<Services.Search.CardModel> randomCard;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        int rnd= new Random().Next(1, 5000);
+        randomCard = services.GetCardsById(rnd);
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            NavigationManager.NavigateTo($"/Card/{randomCard.First().Name}");
+        }
+    }
+
+}
