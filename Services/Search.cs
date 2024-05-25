@@ -27,9 +27,8 @@ namespace MTG.Services
 
             return rarities;
         }
-        public IQueryable<CardModel> GetCollection(string username)
+        public IQueryable<Models.Card> GetCollection(string username)
         {
-            Console.WriteLine(username);
             string collection = dbContext.Users
                 .Where(w => w.Username == username)
                 .Select(p => p.Collection)
@@ -37,21 +36,38 @@ namespace MTG.Services
             Console.WriteLine(collection);
             string[] subs = collection.Split(',');
 
-            foreach (string sub in subs)
-            {
-                Console.WriteLine(sub);
-            }//
             var cardIds = subs.Select(int.Parse).ToList(); // Collect IDs first
             IQueryable<Card> cards = dbContext.Cards.Where(w => cardIds.Contains((int)w.Id));
-            return cards.Select(p => new CardModel
+            return cards.Select(p => new Models.Card
             {
                 Id = p.Id,
                 Name = p.Name,
                 Image = p.OriginalImageUrl
             });
         }
+        public async Task AddCardToCollection(string username, long cardIdToAdd)
+        {
+            using var dbContext = new MyDBContext();
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                throw new ArgumentException($"User with username '{username}' not found.");
+            }
 
-        public IQueryable<CardModel> GetCards(SearchParameters search)
+            // Get the existing collection 
+            var existingCollection = user.Collection != null
+                ? user.Collection.Split(',').Select(long.Parse).ToList()
+                : new List<long>();
+            // Add the new card IDs, avoiding duplicates
+            existingCollection.Add(cardIdToAdd);
+            // Update the collection in the database
+            user.Collection = string.Join(",", existingCollection);
+            await dbContext.SaveChangesAsync();
+        }
+
+
+
+        public IQueryable<Models.Card> GetCards(SearchParameters search)
         {
             Console.WriteLine(search.ToString());
             IQueryable<Card> cards = dbContext.Cards
@@ -144,7 +160,7 @@ namespace MTG.Services
             cards = cards.OrderBy(o => o.Name);
             cards = cards.Skip(search.range * search.page);
             cards = cards.Take(search.range);
-            return cards.Select(p => new CardModel
+            return cards.Select(p => new Models.Card
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -153,7 +169,7 @@ namespace MTG.Services
               .OrderBy(o => o.Name);
         }
 
-        public IQueryable<CardModel> GetCardsByName(string search)
+        public IQueryable<Models.Card> GetCardsByName(string search)
         {
             Console.WriteLine(search.ToString());
             IQueryable<Card> cards = dbContext.Cards;
@@ -163,29 +179,29 @@ namespace MTG.Services
             {
                 Console.WriteLine($"{item.Name}");
             }
-            return cards.Select(p => new CardModel
+            return cards.Select(p => new Models.Card
             {
                 Id = p.Id,
                 Name = p.Name,
                 Image = p.OriginalImageUrl,
-                CardText=p.Text,
-                CardCost = p.ManaCost,
+                Text=p.Text,
+                ConvertedManaCost = p.ManaCost,
                 SetCode=p.SetCode
             });
         }
 
-        public IQueryable<CardModel> GetCardsId(int search)
+        public IQueryable<Models.Card> GetCardsId(int search)
         {
             IQueryable<Card> cards = dbContext.Cards;
             cards = cards.Where(w => w.Id == search);
             cards = cards.Where(w => w.OriginalImageUrl != null);
-            return cards.Select(p => new CardModel
+            return cards.Select(p => new Models.Card
             {
                 Id = p.Id,
                 Name = p.Name,
                 Image = p.OriginalImageUrl,
-                CardText = p.Text,
-                CardCost = p.ManaCost,
+                Text = p.Text,
+                ConvertedManaCost = p.ManaCost,
                 SetCode = p.SetCode
             });
         }
@@ -195,33 +211,32 @@ namespace MTG.Services
         {
             IQueryable cardsByColor = dbContext.CardColors.Include(c => c.Color)
                 .Where(w => w.Color.Name == color)
-                .Select(p => new CardModel
+                .Select(p => new Models.Card
                 {
                     Id = p.CardId,
                     Name = p.Card.Name,
-                    Image = p.Card.OriginalImageUrl,
-                    Color = p.Color.Name
+                    Image = p.Card.OriginalImageUrl
                 })
                 .OrderBy(o => o.Name);
             return cardsByColor;
         }
-        public class CardModel
-        {
-            public long? Id { get; init; }
-            public string? Name { get; init; }
-            public string? CardText { get; init; }
-            public string? CardCost { get; init; }
-            public string? Image { get; init; }
-            public string? Color { get; init; }
-            public string? SetCode { get; init; }
+        //public class CardModel
+        //{
+        //    public long? Id { get; init; }
+        //    public string? Name { get; init; }
+        //    public string? CardText { get; init; }
+        //    public string? CardCost { get; init; }
+        //    public string? Image { get; init; }
+        //    public string? Color { get; init; }
+        //    public string? SetCode { get; init; }
 
-        }
+        //}
 
         public IQueryable GetCardsByType(string type, int idRange)
         {
             IQueryable cardsByType = dbContext.CardTypes.Include(c => c.Type)
                 .Where(w => w.CardId >= idRange && w.CardId < idRange + 50 && w.Type.Name == type)
-                .Select(p => new CardModel
+                .Select(p => new Models.Card
                 {
                     Id = p.CardId,
                     Name = p.Card.Name,
@@ -230,33 +245,6 @@ namespace MTG.Services
                 .OrderBy(o => o.Name);
             return cardsByType;
         }
-
-        public IQueryable GetRedCards()
-        {
-            IQueryable redCards = dbContext.CardColors.Include(c => c.Color)
-                .Where(w => w.CardId >= 1000 && w.CardId < 1050 && w.Color.Name == "Red")
-                .Select(p => new RedCardModel
-                {
-                    Id = p.CardId,
-                    Name = p.Card.Name,
-                    Image = p.Card.OriginalImageUrl,
-                    Color = p.Color.Name
-                })
-                .OrderBy(o => o.Name);
-            return redCards;
-        }
-        public class RedCardModel
-        {
-            public long? Id { get; init; }
-            public string? Name { get; init; }
-            public string? Image { get; init; }
-            public string? Color { get; init; }
-
-        }
-
-
-
-
 
     }
 }

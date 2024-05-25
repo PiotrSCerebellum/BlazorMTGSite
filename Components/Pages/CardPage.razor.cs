@@ -2,22 +2,32 @@
 using MTG.Services;
 using System.Linq;
 
+
 namespace MTG.Components.Pages
 {
     public partial class CardPage
     {
-        IQueryable<Services.Search.CardModel> myCards;
+        IQueryable<Models.Card> myCards;
         Services.Search services = new Services.Search();
         [Parameter] public string? searchString { get; set; }
         int cardNumber;
-        private Services.Search.CardModel selectedCard;
-        private void SelectCard(Services.Search.CardModel card)
+        private Models.Card selectedCard;
+        string userName;
+        private void SelectCard(Models.Card card)
         {
             selectedCard = card;
         }
-        protected void AddCard()
+        protected async Task AddCard()
         {
-            // Add card to user collection
+            var result = await ProtectedSessionStorage.GetAsync<string>("User");
+            if (result.Success)
+            {
+                userName = result.Value;
+            }
+            if (userName != null)
+            {
+                services.AddCardToCollection(userName, selectedCard.Id);
+            }
         }
 
         protected override void OnInitialized()
