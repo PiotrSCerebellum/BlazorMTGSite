@@ -171,7 +171,6 @@ namespace MTG.Services
 
         public IQueryable<Models.Card> GetCardsByName(string search)
         {
-            Console.WriteLine(search.ToString());
             IQueryable<Card> cards = dbContext.Cards;
             cards = cards.Where(w => w.Name==search);
             cards = cards.Where(w => w.OriginalImageUrl != null);
