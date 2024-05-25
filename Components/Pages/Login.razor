@@ -33,7 +33,7 @@
         login.CreatePasswordHash(loggedUser);
         ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
         Console.WriteLine("User registered:" + $"{loggedUser.Username}");
-        NavigationManager.NavigateTo("/RandomCard");
+        NavigationManager.NavigateTo("/RandomCard", forceLoad: true);
     }
     public void logIn()
     {
@@ -46,6 +46,7 @@
        
     // Session code
     ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
+    StateHasChanged();
     
     }
 }

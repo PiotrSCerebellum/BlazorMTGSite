@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inherits LayoutComponentBase
+@inject ProtectedSessionStorage ProtectedSessionStorage
+@inject NavigationManager NavigationManager
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +10,17 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="/Login" target="_blank">Login Register</a>
+            @if (username == null)
+            {
+                <a href="/Login" target="_blank">Login/Register</a>
+            }
+            else
+            {
+                <div>
+                    <a @onclick="logout">Hello, @username! Logout </a>
+                </div>
+            }
+            
         </div>
 
         <article class="content px-4">
@@ -21,3 +34,23 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+@code{
+    string? username=null;
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("MainLayout OnInitializedAsync");
+        base.OnInitialized();
+        var result = await ProtectedSessionStorage.GetAsync<string>("User");
+        if (result.Success)
+        {
+            username = result.Value;
+        }
+        Console.WriteLine("MainLayout OnInitializedAsync username: " + username);
+    }
+    protected async Task logout()
+    {
+        await ProtectedSessionStorage.DeleteAsync("User");
+        await InvokeAsync(StateHasChanged);
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+}
