@@ -3,6 +3,13 @@
 @inject ProtectedSessionStorage ProtectedSessionStorage
 @inject NavigationManager NavigationManager
 
+<HeadContent>
+    @if (isDarkMode)
+    {
+        <link href="DarkMode.css" rel="stylesheet" />
+    }
+</HeadContent>
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -10,6 +17,10 @@
 
     <main>
         <div class="top-row px-4">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked="@isDarkMode" @onchange="@OnCheckboxChange">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
+            </div>
             @if (username == null)
             {
                 <a href="/Login" target="_blank">Login/Register</a>
@@ -17,10 +28,9 @@
             else
             {
                 <div>
-                    <a @onclick="logout">Hello, @username! Logout </a>
+                    <a @onclick="Logout">Hello, @username! Logout</a>
                 </div>
             }
-            
         </div>
 
         <article class="content px-4">
@@ -34,12 +44,14 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-@code{
-    string? username=null;
+
+@code {
+    private string? username = null;
+    private bool isDarkMode = false;
+
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("MainLayout OnInitializedAsync");
-        base.OnInitialized();
         var result = await ProtectedSessionStorage.GetAsync<string>("User");
         if (result.Success)
         {
@@ -47,10 +59,17 @@
         }
         Console.WriteLine("MainLayout OnInitializedAsync username: " + username);
     }
-    protected async Task logout()
+
+    private async Task Logout()
     {
         await ProtectedSessionStorage.DeleteAsync("User");
-        await InvokeAsync(StateHasChanged);
+        username = null;
         NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private void OnCheckboxChange(ChangeEventArgs e)
+    {
+        isDarkMode = (bool)e.Value;
+        StateHasChanged();
     }
 }
