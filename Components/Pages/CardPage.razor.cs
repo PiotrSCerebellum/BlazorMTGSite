@@ -29,6 +29,7 @@ namespace MTG.Components.Pages
                await services.AddCardToCollection(userName, selectedCard.Id);
             }
         }
+        //Works remeber to change in production
         protected async Task AddCardTest()
         {
             await ProtectedSessionStorage.SetAsync("User", "admin");

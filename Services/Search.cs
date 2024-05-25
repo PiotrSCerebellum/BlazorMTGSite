@@ -189,7 +189,7 @@ namespace MTG.Services
             });
         }
 
-        public IQueryable<Models.Card> GetCardsId(int search)
+        public IQueryable<Models.Card> GetCardById(int search)
         {
             IQueryable<Card> cards = dbContext.Cards;
             cards = cards.Where(w => w.Id == search);
