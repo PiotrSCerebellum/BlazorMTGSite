@@ -1,4 +1,6 @@
-﻿using MTG.Services;
+﻿using Microsoft.Build.Logging;
+using MTG.Models;
+using MTG.Services;
 
 namespace MTG.Components.Pages
 {
@@ -7,10 +9,25 @@ namespace MTG.Components.Pages
         IQueryable<Search.SimpleCardModel> myCards;
         Search services = new Search();
         string username;
+        bool showCardChooser = false;
+        public List<string> colors;
+        public List<string> checkedColors;
+        string cardName;
 
         private void NavigateToCard(string cardName)
         {
             NavigationManager.NavigateTo($"/Card/{cardName}");
+        }
+        void OnchangeColor(string color, object isChecked)
+        {
+            if ((bool)isChecked)
+                checkedColors.Add(color);
+            else
+                checkedColors.Remove(color);
+        }
+        protected void filterCards() {
+            myCards = myCards.Where(w => w.Name.Contains(cardName));
+            StateHasChanged();
         }
 
         protected async Task GetUsername()
@@ -40,6 +57,7 @@ namespace MTG.Components.Pages
             if (result.Success)
             {
                 username = result.Value;
+                colors=checkedColors = services.GetColors();
             }
             if (username == null)
             {

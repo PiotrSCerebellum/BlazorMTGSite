@@ -15,7 +15,7 @@ namespace MTG.Components.Pages
         ElementReference results;
 
         SearchParameters search = new SearchParameters();
-        Services.Search services = new Services.Search();
+        Search services = new Search();
 
         protected override void OnInitialized()
         {

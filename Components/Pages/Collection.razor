@@ -7,6 +7,32 @@
 @inject ProtectedSessionStorage ProtectedSessionStorage
 
 <h3>Collection</h3>
+<div>
+<button @onclick="() => showCardChooser = !showCardChooser"> Card Chooser</button>
+</div>
+@if (showCardChooser)
+{
+    <div class="inputField">
+        <label for="cardNameInput">Card Name</label>
+        <input id="cardNameInput" @bind=cardName type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
+        <button @onclick="() => filterCards()">Filter</button>
+    </div>
+    @* <div class="inputField">
+        <label for="colorSelect">Colors</label>
+        <div id="colorSelect">
+            @foreach (string color in colors)
+            {
+                <label class="color-checkbox">
+                    <input type="checkbox" @onchange="(args) => OnchangeColor(color, args.Value)" name="@color" value="@color" checked="true" />
+                    <span class="checkbox-icon">
+                        <img src="./images/@string.Format("{0}.svg",color)" alt="@color" />
+                    </span>
+                </label>
+            }<br />
+        </div>
+    </div> *@
+
+}
 
 <ul class="image-list">
     @if (myCards != null)
