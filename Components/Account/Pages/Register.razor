@@ -3,9 +3,12 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using MTG.Data
+@using MTG.Services
+@using MTG.Models
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -14,6 +17,7 @@
 @inject ILogger<Register> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject ProtectedSessionStorage ProtectedSessionStorage;
 
 <PageTitle>Register</PageTitle>
 
@@ -67,6 +71,18 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
+        // old code 
+        /*
+        Loginn login = new Loginn();
+        User loggedUser = new User();
+
+        login.CreatePasswordHash(loggedUser);
+   
+        ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
+        */
+
+        // generated stuff
+        /*
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -100,8 +116,11 @@
 
         await SignInManager.SignInAsync(user, isPersistent: false);
         RedirectManager.RedirectTo(ReturnUrl);
+        */
     }
 
+    // also generated
+    /*
     private ApplicationUser CreateUser()
     {
         try
@@ -123,6 +142,8 @@
         }
         return (IUserEmailStore<ApplicationUser>)UserStore;
     }
+
+    */
 
     private sealed class InputModel
     {
