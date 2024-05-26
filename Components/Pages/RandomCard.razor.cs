@@ -8,31 +8,26 @@ namespace MTG.Components.Pages
         Search services = new Search();
         IQueryable<SimpleCardModel> randomCard;
 
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            int rnd = new Random().Next(1, 5000);
-            try {
-                randomCard = services.GetCardById(rnd);
-            }catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
-        }
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             base.OnAfterRender(firstRender);
             if (firstRender)
             {
-                try { NavigationManager.NavigateTo($"/Card/{randomCard.First().Name}"); }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                
+              await GetRandomCard();
             }
+        }
+        protected async Task GetRandomCard()
+        {
+            
+                
+                while (randomCard == null)
+                {
+                    int rnd = new Random().Next(1, 5000);
+                    randomCard = services.GetCardById(rnd);
+                }
+            try { NavigationManager.NavigateTo($"/Card/{randomCard.First().Name}"); } 
+            catch { NavigationManager.NavigateTo($"/Card/Counterspell"); }
+
         }
 
     }
