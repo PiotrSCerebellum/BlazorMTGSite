@@ -18,21 +18,6 @@
         <button @onclick="() => filterCards()">Filter</button>
         <button @onclick="() => clearFilter()">Clear</button>
     </div>
-    @* <div class="inputField">
-        <label for="colorSelect">Colors</label>
-        <div id="colorSelect">
-            @foreach (string color in colors)
-            {
-                <label class="color-checkbox">
-                    <input type="checkbox" @onchange="(args) => OnchangeColor(color, args.Value)" name="@color" value="@color" checked="true" />
-                    <span class="checkbox-icon">
-                        <img src="./images/@string.Format("{0}.svg",color)" alt="@color" />
-                    </span>
-                </label>
-            }<br />
-        </div>
-    </div> *@
-
 }
 
 <ul class="image-list">
@@ -51,8 +36,6 @@
         <p>Loading collection...</p>
     }
 </ul>
-
-
 
 @code {
        
