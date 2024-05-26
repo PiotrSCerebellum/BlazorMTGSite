@@ -7,33 +7,31 @@
 @inject ProtectedSessionStorage ProtectedSessionStorage
 
 <h1>Card Page for @searchString</h1>
+
 <div class="card-display">
     @if (selectedCard != null)
     {
         <div>
             <img src="@selectedCard.Image" />
-            <button @onclick="() => AddCard()">Add to Deck</button>
         </div>
-        <div class="card-details">
-            <h3>@selectedCard.Name @selectedCard.ConvertedManaCost</h3>
-            <p>@selectedCard.Text</p>
-            
-        </div>
-        <div class="printing-details">
-        <h3>Printings</h3>
-        <ul class="card-list">
-                @foreach (Search.SimpleCardModel card in myCards)
-                {
-                <li @onclick="() => SelectCard(card)">
-                    @card.Name @card.SetCode
-                </li>
-            }
-        </ul>
+        <div class="details-container">
+            <div class="card-details">
+                <h3>@selectedCard.Name @selectedCard.ConvertedManaCost</h3>
+                <p>@selectedCard.Text</p>
+            </div>
+            <div class="printing-details">
+                <h3>Printings</h3>
+                <ul class="card-list">
+                    @foreach (Search.SimpleCardModel card in myCards)
+                    {
+                        <li @onclick="() => SelectCard(card)">
+                            @card.Name @card.SetCode
+                        </li>
+                    }
+                </ul>
+            </div>
+            <button class="add-to-deck" @onclick="() => AddCard()">Add to Deck</button>
         </div>
     }
 </div>
 <br />
-
-
-
-
