@@ -1,10 +1,19 @@
 ﻿@page "/"
-
+@inject NavigationManager NavigationManager
 <PageTitle>Home</PageTitle>
 
 <div class="home-container">
-    <h1>Welcome to MTG Central!</h1>
-    <p>Explore the world of Magic: The Gathering</p>
-    
+    <div class="hero-section">
+        <h1>Welcome to MTG Central!</h1>
+        <p>Explore the world of Magic: The Gathering</p>
+        <button class="search-button" @onclick="NavigateToCardSearch">Search for Cards</button>
+    </div>
+   
 </div>
+@code {
+    private void NavigateToCardSearch()
+    {
+        NavigationManager.NavigateTo("/CardSearch"); 
+    }
+}
 
