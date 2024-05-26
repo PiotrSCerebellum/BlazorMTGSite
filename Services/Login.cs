@@ -26,10 +26,10 @@ namespace MTG.Services
 
             if (userAttempt != null)
             {
-                // Check if password matches
+              
                 if (user.Password == userAttempt.Password)
                 {
-                    httpContext.Session.SetString("UserId", userAttempt.Username); // this  Store username in session
+                    httpContext.Session.SetString("UserId", userAttempt.Username); 
                     return true;
                 }
                 else
@@ -42,21 +42,18 @@ namespace MTG.Services
                 return false;
             }
         }
-        // attempt to hash passwords
-        // the stored salt here is just the salt from user, we can change it later to use just user as input if needed
-        // this was a plan for future feature where salt would be stored separately from the hash as extra security measure, either in a db or somewhere locally
+      
+        private const int SaltSize = 16; 
+        private const int KeySize = 32;
 
-        private const int SaltSize = 16; // 128 bit
-        private const int KeySize = 32; // 256 bit
-
-        public static bool ValidatePassword(User user) //used string storedSalt before
+        public static bool ValidatePassword(User user)
         {
             MyDBContext dbContext = new MyDBContext();
 
             User userAttempt = dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
             if (userAttempt != null)
             {
-                var saltBytes = Convert.FromBase64String(userAttempt.Salt); //was storedSalt before
+                var saltBytes = Convert.FromBase64String(userAttempt.Salt); 
                 var rfc2898DeriveBytes = new Rfc2898DeriveBytes(user.Password, saltBytes, 10000);
                 return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(KeySize)) == userAttempt.Password;
             }
@@ -66,7 +63,7 @@ namespace MTG.Services
             }
         }
 
-        // this can be used for registering a new user
+      
         public void CreatePasswordHash(User user)
         {
             MyDBContext dbContext = new MyDBContext();
