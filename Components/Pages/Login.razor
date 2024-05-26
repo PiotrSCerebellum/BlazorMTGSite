@@ -1,46 +1,100 @@
 ﻿@page "/Login"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.AspNetCore.Identity
+@using MTG.Data
 @using MTG.Services
 @using MTG.Models
-@rendermode InteractiveServer
-@using System.Linq
-@using System.Text.Json
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStorage;
 
-<h3>Login</h3>
-<div class="inputField">
-    <label for="Username">Username</label>
-    <input id="usernameInput" @bind=loggedUser.Username type="text" placeholder="Username" />
-</div>
+<PageTitle>Log in</PageTitle>
 
-<div class="inputField">
-    <label for="Password">Password</label>
-    <input id="passwordInput" @bind=loggedUser.Password type="text" placeholder="Password" />
+<h1>Log in</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <StatusMessage Message="@errorMessage" />
+            <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
+                <DataAnnotationsValidator />
+                <h2>Use a local account to log in.</h2>
+                <hr />
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="Input.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label for="username" class="form-label">Username</label>
+                    <ValidationMessage For="() => Input.Username" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label for="password" class="form-label">Password</label>
+                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                </div>
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+            </EditForm>
+        </section>
+    </div>
 </div>
-<div>
-    <button @onclick=@Register>Register</button>
-
-    <button type="Log in" @onclick=@logIn>Log in</button>
-</div>
-
 
 @code {
-    Loginn login = new Loginn();
-    User loggedUser = new User();
-    public void Register()
+    private string? errorMessage;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    // generated code, results in errors
+    /*
+    protected override async Task OnInitializedAsync()
     {
-        login.CreatePasswordHash(loggedUser);
-        ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
-        Console.WriteLine("User registered:" + $"{loggedUser.Username}");
-        NavigationManager.NavigateTo("/RandomCard", forceLoad: true);
+        if (HttpMethods.IsGet(HttpContext.Request.Method))
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        }
     }
-    public void logIn()
+    */
+
+    public async Task LoginUser()
     {
-        login.CreatePasswordHash(loggedUser);
-        
-    ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
-    StateHasChanged();
-    
+        //my code =======================================================
+        User loggedUser = new User();
+        loggedUser.Username = Input.Username;
+        loggedUser.Password = Input.Password;
+
+        //used for registering
+        //login.CreatePasswordHash(loggedUser);
+        if (Loginn.ValidatePassword(loggedUser))
+        {
+            // Session code
+            ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
+            NavigationManager.NavigateTo("/RandomCard");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/Account/InvalidUser");
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        public string Username { get; set; } = "";
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = "";
     }
 }
