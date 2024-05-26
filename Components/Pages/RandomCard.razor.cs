@@ -13,7 +13,13 @@ namespace MTG.Components.Pages
         {
             base.OnInitialized();
             int rnd = new Random().Next(1, 5000);
-            randomCard = services.GetCardById(rnd);
+            try {
+                randomCard = services.GetCardById(rnd);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
         protected override void OnAfterRender(bool firstRender)
         {
