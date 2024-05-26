@@ -16,6 +16,7 @@
         <label for="cardNameInput">Card Name</label>
         <input id="cardNameInput" @bind=cardName type="text" placeholder="Input any words in the name, e.g. 'Swift'" />
         <button @onclick="() => filterCards()">Filter</button>
+        <button @onclick="() => clearFilter()">Clear</button>
     </div>
     @* <div class="inputField">
         <label for="colorSelect">Colors</label>

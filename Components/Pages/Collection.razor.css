@@ -19,3 +19,18 @@
     border-radius: 6px;
     width: 100%;
 }
+button {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+        background-color: #f0f0f5;
+        color: black;
+        outline: 1px solid black;
+    }

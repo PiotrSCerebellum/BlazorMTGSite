@@ -7,6 +7,7 @@ namespace MTG.Components.Pages
     public partial class Collection
     {
         IQueryable<Search.SimpleCardModel> myCards;
+        IQueryable<Search.SimpleCardModel> unfilteredCards;
         Search services = new Search();
         string username;
         bool showCardChooser = false;
@@ -27,6 +28,12 @@ namespace MTG.Components.Pages
         }
         protected void filterCards() {
             myCards = myCards.Where(w => w.Name.Contains(cardName));
+            StateHasChanged();
+        }
+        protected void clearFilter()
+        {
+            username = "";
+            myCards = unfilteredCards;
             StateHasChanged();
         }
 
@@ -68,7 +75,7 @@ namespace MTG.Components.Pages
 
                 if (!string.IsNullOrEmpty(username))
                 {
-                    myCards = await services.GetCollectionAsync(username);
+                    myCards = unfilteredCards = await services.GetCollectionAsync(username);
                 }
                 foreach (var card in myCards)
                 {
