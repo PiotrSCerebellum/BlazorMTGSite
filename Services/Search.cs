@@ -248,6 +248,23 @@ namespace MTG.Services
                 SetCode = p.SetCode
             });
         }
+        public async Task<SimpleCardModel> GetCardByIdAsync(int search)
+        {
+            var card = await dbContext.Cards
+                            .Where(w => w.Id == search && w.OriginalImageUrl != null)
+                            .Select(p => new SimpleCardModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                Image = p.OriginalImageUrl,
+                                Text = p.Text,
+                                ConvertedManaCost = p.ManaCost,
+                                SetCode = p.SetCode
+                            })
+                            .FirstOrDefaultAsync(); 
+
+            return card; 
+        }
 
 
         public IQueryable GetCardsByColor(string color)
