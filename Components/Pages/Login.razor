@@ -39,12 +39,6 @@
     {
         login.CreatePasswordHash(loggedUser);
         
-        // if (login.checkuser(loggeduser))
-        // {   
-        //     navigationmanager.navigateto("/");
-        // }   
-       
-    // Session code
     ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
     StateHasChanged();
     

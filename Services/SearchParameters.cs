@@ -68,7 +68,7 @@ namespace MTG.Services
                 string[] parts = prop.Split(':', 2);
                 if (parts.Length != 2)
                 {
-                    continue; // Handle malformed parts
+                    continue; 
                 }
 
                 string propertyName = parts[0].Trim();

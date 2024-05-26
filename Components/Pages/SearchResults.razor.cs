@@ -22,7 +22,7 @@ namespace MTG.Components.Pages
             if(52<=myCards.Count())
             {
                 search.page++;
-                NavigationManager.NavigateTo("/SearchResult/" + search.toString());
+                NavigationManager.NavigateTo("/SearchResult/" + search.toString(), forceLoad:true);
             }
         }
         private void PreviousPage()
@@ -30,7 +30,7 @@ namespace MTG.Components.Pages
             if (search.page > 0)
             {
                 search.page--;
-                NavigationManager.NavigateTo("/SearchResult/" + search.toString());
+                NavigationManager.NavigateTo("/SearchResult/" + search.toString(), forceLoad: true);
             }
         }
         private bool CanNavigateNext()
