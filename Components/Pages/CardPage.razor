@@ -11,8 +11,9 @@
 <div class="card-display">
     @if (selectedCard != null)
     {
-        <div>
+        <div class="cardAndButton">
             <img src="@selectedCard.Image" />
+            <button class="add-to-deck" @onclick="() => AddCard()">Add to Deck</button>
         </div>
         <div class="details-container">
             <div class="card-details">
@@ -30,7 +31,7 @@
                     }
                 </ul>
             </div>
-            <button class="add-to-deck" @onclick="() => AddCard()">Add to Deck</button>
+           
         </div>
     }
 </div>

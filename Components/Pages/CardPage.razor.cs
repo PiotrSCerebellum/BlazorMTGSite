@@ -30,26 +30,9 @@ namespace MTG.Components.Pages
             {
                await services.AddCardToCollection(userName, selectedCard.Id);
                Console.WriteLine("added card"+selectedCard.Name+selectedCard.Id+" to "+userName);
-               //NavigationManager.NavigateTo("/collection");
 
             }
         }
-        //Works remeber to change in production
-        protected async Task AddCardTest()
-        {
-            await ProtectedSessionStorage.SetAsync("User", "admin");
-            var result = await ProtectedSessionStorage.GetAsync<string>("User");
-            if (result.Success)
-            {
-                userName = result.Value;
-            }
-            if (userName != null)
-            {
-                services.AddCardToCollection(userName, selectedCard.Id);
-               Console.WriteLine(services.GetCollection(userName));
-            }
-        }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();

@@ -26,8 +26,7 @@ body {
 
 
 .card-details, .printing-details {
-    background: none; 
-    box-shadow: none;
+    background: #8bc4d7; 
 }
 
     .card-details h3 {
@@ -58,7 +57,10 @@ body {
             background-color: #f5f5f5;
         }
 
-
+.cardAndButton{
+    display:flex;
+    flex-direction:column;
+}
 .add-to-deck {
     background-color: #007bff; 
     color: white;
@@ -69,3 +71,32 @@ body {
     font-size: 16px;
     margin-top: 15px;
 }
+.card-details {
+    background-color: #e6f2ff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.printing-details {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    .printing-details .card-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+        .printing-details .card-list li {
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+
+            .printing-details .card-list li:hover {
+                background-color: #d9e8ff;
+            }
