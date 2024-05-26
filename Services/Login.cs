@@ -18,6 +18,8 @@ namespace MTG.Services
             public string? Password { get; init; }
         }
 
+        // old code not using hashing, no longer useable
+        /*
         public Boolean CheckUser(User user, HttpContext httpContext)
         {
             MyDBContext dbContext = new MyDBContext();
@@ -42,6 +44,7 @@ namespace MTG.Services
                 return false;
             }
         }
+        */
       
         private const int SaltSize = 16; 
         private const int KeySize = 32;

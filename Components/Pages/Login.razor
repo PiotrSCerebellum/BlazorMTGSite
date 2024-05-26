@@ -26,7 +26,7 @@
                 <hr />
                 <ValidationSummary class="text-danger" role="alert" />
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <InputText @bind-Value="Input.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="username" />
                     <label for="username" class="form-label">Username</label>
                     <ValidationMessage For="() => Input.Username" class="text-danger" />
                 </div>
@@ -55,32 +55,17 @@
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
 
-    // generated code, results in errors
-    /*
-    protected override async Task OnInitializedAsync()
-    {
-        if (HttpMethods.IsGet(HttpContext.Request.Method))
-        {
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-        }
-    }
-    */
-
     public async Task LoginUser()
     {
-        //my code =======================================================
         User loggedUser = new User();
         loggedUser.Username = Input.Username;
         loggedUser.Password = Input.Password;
 
-        //used for registering
-        //login.CreatePasswordHash(loggedUser);
         if (Loginn.ValidatePassword(loggedUser))
         {
             // Session code
             ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
-            NavigationManager.NavigateTo("/RandomCard");
+            NavigationManager.NavigateTo("/RandomCard", forceLoad: true);
         }
         else
         {
