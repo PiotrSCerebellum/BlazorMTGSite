@@ -26,7 +26,12 @@ namespace MTG.Components.Pages
             base.OnAfterRender(firstRender);
             if (firstRender)
             {
-                NavigationManager.NavigateTo($"/Card/{randomCard.First().Name}");
+                try { NavigationManager.NavigateTo($"/Card/{randomCard.First().Name}"); }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
             }
         }
 
