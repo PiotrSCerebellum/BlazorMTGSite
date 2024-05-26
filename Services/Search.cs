@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-//using MoreLinq;
-
 namespace MTG.Services
 {
     public class Search
@@ -28,8 +26,7 @@ namespace MTG.Services
             return rarities;
         }
         public IQueryable<SimpleCardModel> GetCollection(string username)
-        {
-            
+        {     
             string collection = dbContext.Users
                 .Where(w => w.Username == username)
                 .Select(p => p.Collection)
@@ -37,7 +34,7 @@ namespace MTG.Services
             Console.WriteLine("Getting collection of" + username + collection);
             string[] subs = collection.Split(',');
 
-            var cardIds = subs.Select(int.Parse).ToList(); // Collect IDs first
+            var cardIds = subs.Select(int.Parse).ToList(); 
             IQueryable<Card> cards = dbContext.Cards.Where(w => cardIds.Contains((int)w.Id));
             return cards.Select(p => new SimpleCardModel
             {
@@ -52,12 +49,11 @@ namespace MTG.Services
 
             if (user == null || user.Collection == null)
             {
-                return Enumerable.Empty<SimpleCardModel>().AsQueryable(); // Return empty result if no collection
+                return Enumerable.Empty<SimpleCardModel>().AsQueryable(); 
             }
 
             var cardIds = user.Collection.Split(',').Select(long.Parse).ToList();
 
-            // Efficiently fetch all cards in a single query
             var cards = await dbContext.Cards.Where(w => cardIds.Contains(w.Id)).ToListAsync();
 
             return cards.Select(p => new SimpleCardModel
@@ -76,17 +72,17 @@ namespace MTG.Services
                 throw new ArgumentException($"User with username '{username}' not found.");
             }
 
-            // Get the existing collection 
+          
             var existingCollection = user.Collection != null
                 ? user.Collection.Split(',').Select(long.Parse).ToList()
                 : new List<long>();
-            // Add the new card IDs, avoiding duplicates
+        
             foreach(var card in existingCollection)
             {
                 Console.WriteLine(card);
             }
             existingCollection.Add(cardIdToAdd);
-            // Update the collection in the database
+         
             user.Collection = string.Join(",", existingCollection);
             Console.WriteLine("Adding card to collection"+user.Collection);
             await dbContext.SaveChangesAsync();
@@ -123,15 +119,12 @@ namespace MTG.Services
                
             }
         }
-
-
         public IQueryable<SimpleCardModel> GetCards(SearchParameters search)
         {
             Console.WriteLine(search.ToString());
             IQueryable<Card> cards = dbContext.Cards
                                           .Include(c=>c.RarityCodeNavigation);
 
-            // Text
             if (!string.IsNullOrEmpty(search.cardName))
             {
                 Console.WriteLine("Name Filtering");
@@ -188,11 +181,9 @@ namespace MTG.Services
                              cardColor => !search.colors.Contains(cardColor.Color.Name)));
                 }
             }
-
             // Type Filtering
             if (search.types.Any())
-            {
-                
+            {      
                     Console.WriteLine("Type Filtering");
                     foreach (string type in search.types)
                     {
@@ -210,7 +201,6 @@ namespace MTG.Services
                 
 
             }
-
 
             cards = cards.Where(w=>w.OriginalImageUrl!=null);
             //Crashes when trying to get distinct cards

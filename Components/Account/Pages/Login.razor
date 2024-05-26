@@ -2,13 +2,17 @@
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using Microsoft.AspNetCore.Identity
 @using MTG.Data
+@using MTG.Services
+@using MTG.Models
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject ProtectedSessionStorage ProtectedSessionStorage;
 
 <PageTitle>Log in</PageTitle>
 
@@ -87,29 +91,52 @@
 
     public async Task LoginUser()
     {
+
+        /*
+        //this is all generated code
+
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
         var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-        if (result.Succeeded)
+            if (result.Succeeded)
         {
-            Logger.LogInformation("User logged in.");
+        Logger.LogInformation("User logged in.");
             RedirectManager.RedirectTo(ReturnUrl);
-        }
-        else if (result.RequiresTwoFactor)
-        {
-            RedirectManager.RedirectTo(
+                }
+                else if (result.RequiresTwoFactor)
+                {
+                RedirectManager.RedirectTo(
                 "Account/LoginWith2fa",
                 new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
         }
-        else if (result.IsLockedOut)
-        {
+            else if (result.IsLockedOut)
+            {
             Logger.LogWarning("User account locked out.");
             RedirectManager.RedirectTo("Account/Lockout");
+            }
+            else
+            {
+            errorMessage = "Error: Invalid login attempt.";
+        }*/
+
+        //my code =======================================================
+        Loginn login = new Loginn();
+        User loggedUser = new User();
+
+        //used for registering
+        //login.CreatePasswordHash(loggedUser);
+        /*
+        if (login.ValidatePassword(loggedUser))
+        {
+            NavigationManager.NavigateTo("/");
         }
         else
         {
-            errorMessage = "Error: Invalid login attempt.";
+            NavigationManager.NavigateTo("/Account/InvalidUser");
         }
+        // Session code
+        ProtectedSessionStorage.SetAsync("User", loggedUser.Username);
+        */
     }
 
     private sealed class InputModel
