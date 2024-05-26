@@ -1,14 +1,14 @@
-﻿/* General styles */
+﻿
 :root {
-    --bs-body-bg: #2e2e2e; /* Dark gray background */
-    --bs-body-color: #b0b0b0; /* Medium gray text for better contrast */
-    --bs-sidebar-bg: #3a3a3a; /* Slightly lighter gray for sidebar */
-    --bs-top-row-bg: #424242; /* Another shade for top row */
-    --bs-link-color: #4da8da; /* Soft blue for links */
-    --bs-link-hover-color: #70b5e6; /* Slightly brighter blue for hover */
-    --bs-error-bg: #d9534f; /* Red for error background */
-    --switch-bg: #6c757d; /* Background for switch when off */
-    --switch-bg-checked: #0d6efd; /* Background for switch when on */
+    --bs-body-bg: #2e2e2e; 
+    --bs-body-color: #b0b0b0;
+    --bs-sidebar-bg: #3a3a3a; 
+    --bs-top-row-bg: #424242; 
+    --bs-link-color: #4da8da; 
+    --bs-link-hover-color: #70b5e6; 
+    --bs-error-bg: #d9534f; 
+    --switch-bg: #6c757d; 
+    --switch-bg-checked: #0d6efd;
 }
 
 body {
