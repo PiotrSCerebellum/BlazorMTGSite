@@ -22,8 +22,8 @@
         <div class="printing-details">
         <h3>Printings</h3>
         <ul class="card-list">
-            @foreach (Models.Card card in myCards)
-            {
+                @foreach (Search.SimpleCardModel card in myCards)
+                {
                 <li @onclick="() => SelectCard(card)">
                     @card.Name @card.SetCode
                 </li>

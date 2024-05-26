@@ -1,11 +1,12 @@
 ﻿using MTG.Services;
+using static MTG.Services.Search;
 
 namespace MTG.Components.Pages
 {
     public partial class RandomCard
     {
         Search services = new Search();
-        IQueryable<Models.Card> randomCard;
+        IQueryable<SimpleCardModel> randomCard;
 
 
         protected override void OnInitialized()

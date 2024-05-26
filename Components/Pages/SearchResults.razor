@@ -6,7 +6,7 @@
 
 <ul class="image-list">
 
-    @foreach (Models.Card myCard in myCards)
+    @foreach (Search.SimpleCardModel myCard in myCards)
     {      
             <img src="@myCard.Image" @onclick="() => NavigateToCard(myCard.Name)" />
     }

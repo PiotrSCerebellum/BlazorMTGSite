@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MTG.Services;
 using System.Linq;
+using static MTG.Services.Search;
 
 
 namespace MTG.Components.Pages
 {
     public partial class CardPage
     {
-        IQueryable<Models.Card> myCards;
+        IQueryable<SimpleCardModel> myCards;
         Services.Search services = new Services.Search();
         [Parameter] public string? searchString { get; set; }
         int cardNumber;
-        private Models.Card selectedCard;
+        private SimpleCardModel selectedCard;
         string? userName;
-        private void SelectCard(Models.Card card)
+        private void SelectCard(SimpleCardModel card)
         {
             selectedCard = card;
         }

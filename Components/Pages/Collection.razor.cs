@@ -4,7 +4,7 @@ namespace MTG.Components.Pages
 {
     public partial class Collection
     {
-        IQueryable<Models.Card> myCards;
+        IQueryable<Search.SimpleCardModel> myCards;
         Search services = new Search();
         string username;
 

@@ -1,6 +1,7 @@
 ﻿using MTG.Services;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
+using static MTG.Services.Search;
 
 
 namespace MTG.Components.Pages
@@ -8,7 +9,7 @@ namespace MTG.Components.Pages
     public partial class SearchResults
     {
 
-        IQueryable<Models.Card> myCards;
+        IQueryable<SimpleCardModel> myCards;
         Search services = new Search();
         [Parameter] public string? searchString { get; set; }
         SearchParameters search = new SearchParameters();
