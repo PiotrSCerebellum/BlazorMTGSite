@@ -1,29 +1,23 @@
 ﻿:root {
-    /* Light mode colors */
-    --light-background: #f5f5f5; /* Background color */
-    --light-text: #333; /* Text color */
-    --light-link: #007bff; /* Link color */
-    --light-link-hover: #0056b3; /* Link hover color */
-    /* Dark mode colors */
-    --dark-background: #2e2e2e; /* Background color */
-    --dark-text: #b0b0b0; /* Text color */
-    --dark-link: #007bff; /* Link color */
-    --dark-link-hover: #0056b3; /* Link hover color */
+   
+    --light-background: #f5f5f5; 
+    --light-text: #333; 
+    --light-link: #007bff;
+    --light-link-hover: #0056b3;
+    
+    --dark-background: #2e2e2e; 
+    --dark-text: #b0b0b0;
+    --dark-link: #007bff; 
+    --dark-link-hover: #0056b3; 
 }
-
-/* Light mode styles */
 body.light-mode {
     background-color: var(--light-background);
     color: var(--light-text);
 }
-
-/* Dark mode styles */
 body.dark-mode {
     background-color: var(--dark-background);
     color: var(--dark-text);
 }
-
-/* Home container styles */
 .home-container {
     display: flex;
     flex-direction: column;
@@ -33,28 +27,23 @@ body.dark-mode {
     padding: 2rem;
     text-align: center;
 }
-
-/* Home title styles */
 .home-title {
-    font-size: 3rem; /* Larger font size */
+    font-size: 3rem; 
     margin-bottom: 1rem;
-    color: var(--light-link); /* Default link color */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for 3D effect */
+    color: var(--light-link);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
 }
 
-/* Home subtitle styles */
 .home-subtitle {
-    font-size: 1.5rem; /* Larger font size */
-    color: inherit; /* Inherit color from parent */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Text shadow for 3D effect */
-}
-/* Link styles */
-a {
-    color: var(--light-link); /* Default link color */
-    text-decoration: none;
+    font-size: 1.5rem;
+    color: inherit; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
 }
 
-    /* Link hover styles */
-    a:hover {
-        color: var(--light-link-hover); /* Link hover color */
+a {
+    color: var(--light-link);
+    text-decoration: none;
+}  
+ a:hover {
+        color: var(--light-link-hover);
     }
